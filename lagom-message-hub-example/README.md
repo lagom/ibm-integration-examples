@@ -69,12 +69,16 @@ Follow these steps to get a local copy of this project and configure it with the
 
 ## Start the console producer
 
-Open a second command line shell and follow the [instructions for running the console sample producer](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample#running-the-sample-local).
+Open a second command line shell and follow the [instructions to build and run the console sample producer](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample#running-the-build-script).
 
 For example:
 
 ```
-java -jar build/libs/kafka-java-console-sample-2.0.jar "kafka02-prod01.messagehub.services.us-south.bluemix.net:9093,kafka04-prod01.messagehub.services.us-south.bluemix.net:9093,kafka01-prod01.messagehub.services.us-south.bluemix.net:9093,kafka05-prod01.messagehub.services.us-south.bluemix.net:9093,kafka03-prod01.messagehub.services.us-south.bluemix.net:9093" "https://kafka-admin-prod01.messagehub.services.us-south.bluemix.net:443" "<api_key>" -producer
+java -jar build/libs/kafka-java-console-sample-2.0.jar \
+   "kafka02-prod01.messagehub.services.us-south.bluemix.net:9093,kafka04-prod01.messagehub.services.us-south.bluemix.net:9093,kafka01-prod01.messagehub.services.us-south.bluemix.net:9093,kafka05-prod01.messagehub.services.us-south.bluemix.net:9093,kafka03-prod01.messagehub.services.us-south.bluemix.net:9093" \
+   "https://kafka-admin-prod01.messagehub.services.us-south.bluemix.net:443" \
+   "<api_key>" \
+   -producer
 ```
 
 After a few seconds, you should see messages logged to the console periodically:
