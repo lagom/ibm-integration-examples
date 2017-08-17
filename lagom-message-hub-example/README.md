@@ -1,16 +1,10 @@
 # Lagom integration with IBM Message Hub
 
-[IBM Message Hub][https://www.ibm.com/software/products/en/ibm-message-hub]
-is a fully-managed Apache Kafka service running on the IBM Bluemix PaaS.
-It exposes a native Kafka interface, so Lagom services can communicate
-with it using the standard Lagom Message Broker API.
+[IBM Message Hub](https://www.ibm.com/software/products/en/ibm-message-hub) is a fully-managed Apache Kafka service running on the IBM Bluemix PaaS. It exposes a native Kafka interface, so Lagom services can communicate with it using the standard Lagom Message Broker API.
 
-This project demonstrates a simple consumer service, designed to consume
-messages produced by the [IBM Message Hub Kafka Java console sample
-application producer][https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample].
+This project demonstrates a simple consumer service, designed to consume messages produced by the [IBM Message Hub Kafka Java console sample application producer](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample).
 
-The Lagom consumer service also exposes a streaming service call, which
-allows WebSocket clients to receive broadcasts of the consumed messages.
+The Lagom consumer service also exposes a streaming service call, which allows WebSocket clients to receive broadcasts of the consumed messages.
 
 ## Prerequisites
 
@@ -22,11 +16,9 @@ To build and run this example, you need:
 - [Message Hub Service Instance](https://console.ng.bluemix.net/catalog/services/message-hub/) provisioned in [IBM Bluemix](https://console.ng.bluemix.net/)
 - [IBM Message Hub Kafka Java console sample application](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample)
 
-Once you have a Message Hub Service instance provisioned in Bluemix, the
-main steps to run this example are:
+Once you have a Message Hub Service instance provisioned in Bluemix, the main steps to run this example are:
 
-1.  [Gather Message Hub credentials](#gather-message-hub-credentials)
-    that are needed for the producer and consumer to authenticate to
+1.  [Gather Message Hub credentials](#gather-message-hub-credentials) that are needed for the producer and consumer to authenticate to
     Message Hub
 2.  [Download and set up the Lagom service](#download-and-set-up-the-lagom-service)
 3.  [Start the console producer](#start-the-console-producer)
@@ -41,8 +33,7 @@ main steps to run this example are:
 3.  Navigate to "Service credentials".
 4.  Create new credentials if needed (no special parameters are required).
 5.  Click "View credentials".
-6.  Copy the following credential values to use in the console producer
-    and consumer service:
+6.  Copy the following credential values to use in the console producer and consumer service:
     - `"api_key"`
     - `"kafka_admin_url"`
     - `"kafka_brokers_sasl"` —
@@ -56,10 +47,7 @@ main steps to run this example are:
 
 ## Download and set up the Lagom service
 
-Follow these steps to get a local copy of this project and configure it
-with the Message Hub credentials you saved in the previous step. You can
-supply the credentials in a configuration file or as environment
-variables.
+Follow these steps to get a local copy of this project and configure it with the Message Hub credentials you saved in the previous step. You can supply the credentials in a configuration file or as environment variables.
 
 1.  Open a command line shell and clone this repository:
     ```
@@ -75,20 +63,13 @@ variables.
        file in a text editor and fill in the empty values of the
        `brokers`, `user` and `password` properties from the credentials
        retrieved above.
-        - You don't need to change the duplicate lines (with the form
-          `brokers  = ${?KAFKA_BROKERS}`) beneath each property—these
-          allow the values to be overridden by environment variables
-          (see below) and are ignored if the environment variables are
-          not set.
+        - You don't need to change the duplicate lines (with the form `brokers  = ${?KAFKA_BROKERS}`) beneath each property—these allow the values to be overridden by environment variables (see below) and are ignored if the environment variables are not set.
         - Be sure not to commit this file with your credentials in it.
-    2. If you prefer not to enter credentials into the file, you can
-       also set them as environment variables named `KAFKA_BROKERS`,
-       `KAFKA_USER`, and `KAFKA_PASSWORD`.
+    2. If you prefer not to enter credentials into the file, you can also set them as environment variables named `KAFKA_BROKERS`, `KAFKA_USER`, and `KAFKA_PASSWORD`.
 
 ## Start the console producer
 
-Open a second command line shell and follow the [instructions
-    for running the console sample producer](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample#running-the-sample-local).
+Open a second command line shell and follow the [instructions for running the console sample producer](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample#running-the-sample-local).
 
 For example:
 
@@ -96,8 +77,7 @@ For example:
 java -jar build/libs/kafka-java-console-sample-2.0.jar "kafka02-prod01.messagehub.services.us-south.bluemix.net:9093,kafka04-prod01.messagehub.services.us-south.bluemix.net:9093,kafka01-prod01.messagehub.services.us-south.bluemix.net:9093,kafka05-prod01.messagehub.services.us-south.bluemix.net:9093,kafka03-prod01.messagehub.services.us-south.bluemix.net:9093" "https://kafka-admin-prod01.messagehub.services.us-south.bluemix.net:443" "<api_key>" -producer
 ```
 
-After a few seconds, you should see messages logged to the console
-periodically:
+After a few seconds, you should see messages logged to the console periodically:
 
 ```
 [2017-08-09 15:23:44,339] INFO class com.messagehub.samples.ProducerRunnable is starting. (com.messagehub.samples.ProducerRunnable)
@@ -107,14 +87,11 @@ periodically:
 [2017-08-09 15:23:54,008] INFO Message produced, offset: 3 (com.messagehub.samples.ProducerRunnable)
 ```
 
-Leave the console producer running in the background as you complete the
-following steps.
+Leave the console producer running in the background as you complete the following steps.
 
 ## Start the Lagom consumer service
 
-In the command line shell where you downloaded the Lagom service, from
-the `lagom-message-hub-example` directory, start the Lagom development
-environment by running:
+In the command line shell where you downloaded the Lagom service, from the `lagom-message-hub-example` directory, start the Lagom development environment by running:
 
 ```
 mvn lagom:runAll
@@ -135,10 +112,7 @@ You should see some console output, including these lines:
 
 These messages indicate that the service has started correctly.
 
-The Lagom consumer service will also begin logging messages to the
-console as they are consumed from Message Hub. It should quickly catch
-up to the messages already produced and then continue logging messages
-as they are produced.
+The Lagom consumer service will also begin logging messages to the console as they are consumed from Message Hub. It should quickly catch up to the messages already produced and then continue logging messages as they are produced.
 
 ```
 [info] c.l.l.m.c.i.MessageHubSubscriber - Message consumed: [This is a test message #0]
@@ -160,8 +134,7 @@ as they are produced.
 
 ## Monitor the stream of consumed messages
 
-From a WebSocket client, you can monitor the stream of messages that the
-Lagom service is consuming by connecting to the service URI as follows:
+From a WebSocket client, you can monitor the stream of messages that the Lagom service is consuming by connecting to the service URI as follows:
 
 1.  Go to https://www.websocket.org/echo.html.
 2.  In the **Location:** field, enter "`ws://localhost:9000/message-hub-consumer`".
@@ -181,8 +154,6 @@ Lagom service is consuming by connecting to the service URI as follows:
 
 To stop running the examples:
 
-1.  Press "Control-C" in the the console running the console producer to
-    stop it.
-2.  Press "Enter" in the console running the Lagom development
-    environment to stop the service.
+1.  Press "Control-C" in the the console running the console producer to stop it.
+2.  Press "Enter" in the console running the Lagom development environment to stop the service.
 
