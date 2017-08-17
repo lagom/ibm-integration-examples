@@ -12,7 +12,8 @@ To build and run this example, you need:
 
 - [git](https://git-scm.com/)
 - [Java SE 8 JDK](http://www.oracle.com/technetwork/java/javase/overview/index.html)
-- [Maven 3.2.1+](https://maven.apache.org/) (3.5.0 recommended)
+- [Maven 3.2.1+](https://maven.apache.org/) to build and run the lagom project (3.5.0 recommended)
+- [Gradle](https://gradle.org/) to build the [Kafka Console Producer](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample).
 - [Message Hub Service Instance](https://console.ng.bluemix.net/catalog/services/message-hub/) provisioned in [IBM Bluemix](https://console.ng.bluemix.net/)
 - [IBM Message Hub Kafka Java console sample application](https://github.com/ibm-messaging/message-hub-samples/tree/master/kafka-java-console-sample)
 
