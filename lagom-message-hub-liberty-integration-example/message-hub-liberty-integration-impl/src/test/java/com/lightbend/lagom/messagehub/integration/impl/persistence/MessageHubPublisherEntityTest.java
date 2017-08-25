@@ -2,12 +2,11 @@ package com.lightbend.lagom.messagehub.integration.impl.persistence;
 
 import akka.Done;
 import akka.actor.ActorSystem;
-import akka.testkit.javadsl.TestKit;
+import akka.testkit.JavaTestKit;
 import com.lightbend.lagom.javadsl.testkit.PersistentEntityTestDriver;
 import com.lightbend.lagom.javadsl.testkit.PersistentEntityTestDriver.Outcome;
 import com.lightbend.lagom.messagehub.integration.impl.persistence.MessageHubPublisherCommand.SendMessage;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,7 +25,7 @@ public class MessageHubPublisherEntityTest {
 
     @AfterClass
     public static void teardown() {
-        TestKit.shutdownActorSystem(system);
+        JavaTestKit.shutdownActorSystem(system);
         system = null;
     }
 
