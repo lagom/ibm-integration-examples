@@ -18,7 +18,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 // This implements the server side of the MessageHubConsumerService API.
 //
 // Read more about implementing services at
-// https://www.lagomframework.com/documentation/1.4.x/java/ServiceImplementation.html#Implementing-services
+// https://www.lagomframework.com/documentation/1.3.x/java/ServiceImplementation.html#Implementing-services
 // and in the source code for MessageHubConsumerService and MessageHubConsumerModule.
 @Singleton
 public class MessageHubConsumerServiceImpl implements MessageHubConsumerService {
@@ -36,7 +36,7 @@ public class MessageHubConsumerServiceImpl implements MessageHubConsumerService 
         // that will complete with the response. In this case, the request is expected to be empty and is not used,
         // and the response will stream messages over a WebSocket as each one is received.
         //
-        // See https://www.lagomframework.com/documentation/1.4.x/java/ServiceImplementation.html#Working-with-streams
+        // See https://www.lagomframework.com/documentation/1.3.x/java/ServiceImplementation.html#Working-with-streams
         // for details on how streaming service calls work in Lagom.
         //
         // Also see the comments in MessageHubConsumerService for more details on how to run this code.

@@ -10,8 +10,8 @@ import java.util.Optional;
 
 // Accumulates messages for publishing to Kafka.
 //
-// For more information, see https://www.lagomframework.com/documentation/1.4.x/java/PersistentEntity.html
-// and https://www.lagomframework.com/documentation/1.4.x/java/MessageBrokerApi.html
+// For more information, see https://www.lagomframework.com/documentation/1.3.x/java/PersistentEntity.html
+// and https://www.lagomframework.com/documentation/1.3.x/java/MessageBrokerApi.html
 public class MessageHubPublisherEntity
         extends PersistentEntity<MessageHubPublisherCommand, MessageHubPublisherEvent, MessageHubPublisherState> {
     private final Logger log = LoggerFactory.getLogger(getClass());

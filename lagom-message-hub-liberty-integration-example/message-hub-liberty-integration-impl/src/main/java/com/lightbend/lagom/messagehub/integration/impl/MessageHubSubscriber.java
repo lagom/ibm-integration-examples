@@ -24,7 +24,7 @@ import javax.inject.Singleton;
  * Subscribes to the MessageHubProducerService Kafka topic. As each message is received, it's logged at INFO level.
  * By default, this prints to the console and {@code logs/application.log}. Also broadcasts each message to internal
  * subscribers using Lagom's
- * <a href="https://www.lagomframework.com/documentation/1.4.x/java/PubSub.html">distributed publish-subscribe API</a>.
+ * <a href="https://www.lagomframework.com/documentation/1.3.x/java/PubSub.html">distributed publish-subscribe API</a>.
  */
 @Singleton
 public class MessageHubSubscriber {

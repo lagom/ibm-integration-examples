@@ -14,7 +14,7 @@ import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 
 // This shows an example of Lagom's PersistentEntityTestDriver
-// for more details, see https://www.lagomframework.com/documentation/1.4.x/java/PersistentEntity.html#Unit-Testing
+// for more details, see https://www.lagomframework.com/documentation/1.3.x/java/PersistentEntity.html#Unit-Testing
 public class MessageHubPublisherEntityTest {
     private static ActorSystem system;
 

@@ -20,7 +20,7 @@ public class MessageHubConsumerModule extends AbstractModule implements ServiceG
         // When calling the "sampleTopic" method on this proxy, it returns an implementation of Topic with a subscribe
         // method backed by a Kafka consumer.
         //
-        // See https://www.lagomframework.com/documentation/1.4.x/java/ServiceClients.html#Binding-a-service-client
+        // See https://www.lagomframework.com/documentation/1.3.x/java/ServiceClients.html#Binding-a-service-client
         // for more info on consuming 3rd party services.
         bindClient(MessageHubProducerService.class);
 
@@ -36,7 +36,7 @@ public class MessageHubConsumerModule extends AbstractModule implements ServiceG
         // The MessageHubConsumerService provides a real-time stream of consumed messages over a WebSocket interface.
         //
         // Read more about implementing services at
-        // https://www.lagomframework.com/documentation/1.4.x/java/ServiceImplementation.html#Implementing-services
+        // https://www.lagomframework.com/documentation/1.3.x/java/ServiceImplementation.html#Implementing-services
         // and in the source code for MessageHubConsumerService and MessageHubConsumerServiceImpl.
         bindService(MessageHubConsumerService.class, MessageHubConsumerServiceImpl.class);
     }

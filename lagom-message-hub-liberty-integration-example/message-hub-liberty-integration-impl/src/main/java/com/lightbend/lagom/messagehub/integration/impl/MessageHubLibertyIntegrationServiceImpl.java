@@ -33,7 +33,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 // This implements the server side of the MessageHubLibertyIntegrationService API.
 //
 // Read more about implementing services at
-// https://www.lagomframework.com/documentation/1.4.x/java/ServiceImplementation.html#Implementing-services
+// https://www.lagomframework.com/documentation/1.3.x/java/ServiceImplementation.html#Implementing-services
 // and in the source code for MessageHubLibertyIntegrationService and MessageHubLibertyIntegrationModule.
 @Singleton
 public class MessageHubLibertyIntegrationServiceImpl implements MessageHubLibertyIntegrationService {
@@ -56,7 +56,7 @@ public class MessageHubLibertyIntegrationServiceImpl implements MessageHubLibert
         // It is used below in the `sendMessage(String, String)` method.
         //
         // Read more about persistent entities at
-        // https://www.lagomframework.com/documentation/1.4.x/java/PersistentEntity.html
+        // https://www.lagomframework.com/documentation/1.3.x/java/PersistentEntity.html
         // and in the source code for MessageHubPublisherEntity
         persistentEntityRegistry.register(MessageHubPublisherEntity.class);
     }
@@ -71,7 +71,7 @@ public class MessageHubLibertyIntegrationServiceImpl implements MessageHubLibert
         //   - The incoming stream of messages sent from the client, which this service publishes to Kafka
         //   - The outgoing stream of messages consumed from Kafka, which this service sends to the client
         //
-        // See https://www.lagomframework.com/documentation/1.4.x/java/ServiceImplementation.html#Working-with-streams
+        // See https://www.lagomframework.com/documentation/1.3.x/java/ServiceImplementation.html#Working-with-streams
         // for details on how streaming service calls work in Lagom.
         //
         // Also see the comments in MessageHubLibertyIntegrationService for more details on how to run this code.
@@ -108,7 +108,7 @@ public class MessageHubLibertyIntegrationServiceImpl implements MessageHubLibert
                 // and transforming them to the representation used by the Liberty sample application.
                 // Producing topics from entity event streams is key to Lagom's guarantee of at-least-once processing.
                 //
-                // For more details, see https://www.lagomframework.com/documentation/1.4.x/java/MessageBrokerApi.html
+                // For more details, see https://www.lagomframework.com/documentation/1.3.x/java/MessageBrokerApi.html
                 persistentEntityRegistry
                         .eventStream(MessageHubPublisherEvent.TAG, offset)
                         .map(mapEvent(this::eventMessage))

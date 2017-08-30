@@ -17,7 +17,7 @@ public class MessageHubLibertyIntegrationModule extends AbstractModule implement
         // available for injecting into other components of this service.
         //
         // Read more about implementing services at
-        // https://www.lagomframework.com/documentation/1.4.x/java/ServiceImplementation.html#Implementing-services
+        // https://www.lagomframework.com/documentation/1.3.x/java/ServiceImplementation.html#Implementing-services
         // and in the source code for MessageHubLibertyIntegrationService and MessageHubLibertyIntegrationServiceImpl.
         bindService(MessageHubLibertyIntegrationService.class, MessageHubLibertyIntegrationServiceImpl.class);
 
