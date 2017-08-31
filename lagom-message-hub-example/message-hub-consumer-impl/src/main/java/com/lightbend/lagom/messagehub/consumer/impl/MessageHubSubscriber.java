@@ -41,14 +41,12 @@ public class MessageHubSubscriber {
 
         // Create a subscriber
         sampleTopic.subscribe()
-                // The consumer group ID defaults to the service name. This overrides it.
-                .withGroupId("kafka-java-console-sample-group-lagom-test")
-
-                // And subscribe to it with at-least-once processing semantics.
-                // Messages will be sent through the provided Flow and offsets are committed after processing completes.
-                // Commits are batched - this is one reason that a message might be processed more than once.
-                .atLeastOnce(messageConsumerFlow());
-
+                // ...and subscribe to it with at-least-once processing semantics.
+                .atLeastOnce(
+                        // Lagom sends messages through the provided Flow, which processes each message.
+                        // Lagom commits consumer offsets to Kafka automatically.
+                        messageConsumerFlow()
+                );
     }
 
     // This allows messages to be broadcast to subscribers within the service.

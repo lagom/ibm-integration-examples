@@ -45,13 +45,8 @@ public class MessageHubSubscriber {
         sampleTopic.subscribe()
                 // ...and subscribe to it with at-least-once processing semantics.
                 .atLeastOnce(
-                        // Messages will be sent through the provided Flow, which processes each message.
-                        // Offsets are committed automatically after processing completes.
-                        // Commits are batched - several messages will be processed between each commit.
-                        // This is one reason that a message might be processed more than once,
-                        // if this service crashes after processing a message, but before its batch is committed,
-                        // it will be reprocessed after restarting, or on another node of the service if
-                        // running in a cluster.
+                        // Lagom sends messages through the provided Flow, which processes each message.
+                        // Lagom commits consumer offsets to Kafka automatically.
                         messageConsumerFlow()
                 );
     }

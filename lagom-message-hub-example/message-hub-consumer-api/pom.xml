@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>messagehub-consumer-api</artifactId>
+    <artifactId>message-hub-consumer-api</artifactId>
 
     <packaging>jar</packaging>
 

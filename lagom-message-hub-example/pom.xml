@@ -11,8 +11,8 @@
 
     <modules>
         <module>kafka-java-console-sample-producer-api</module>
-        <module>messagehub-consumer-api</module>
-        <module>messagehub-consumer-impl</module>
+        <module>message-hub-consumer-api</module>
+        <module>message-hub-consumer-impl</module>
     </modules>
 
     <build>
@@ -77,12 +77,18 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <!-- IBM Message Hub requires a Kafka 0.10.2+ client -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>0.10.2.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <lagom.version>1.4.0-M1</lagom.version>
+        <lagom.version>1.3.7</lagom.version>
     </properties>
 </project>

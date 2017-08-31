@@ -9,15 +9,15 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>messagehub-consumer-impl</artifactId>
+    <artifactId>message-hub-consumer-impl</artifactId>
 
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Depends on messagehub-consumer-api because we implement this API -->
+        <!-- Depends on message-hub-consumer-api because we implement this API -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>messagehub-consumer-api</artifactId>
+            <artifactId>message-hub-consumer-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Depends on kafka-java-console-sample-producer-api because we consume this API -->

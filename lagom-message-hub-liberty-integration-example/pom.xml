@@ -109,7 +109,7 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <!-- Message Hub requires Kafka client version 0.10.2.1 -->
+            <!-- IBM Message Hub requires a Kafka 0.10.2+ client -->
             <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-clients</artifactId>
