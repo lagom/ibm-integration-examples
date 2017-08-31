@@ -44,6 +44,12 @@
             <groupId>com.typesafe.play</groupId>
             <artifactId>play-netty-server_2.11</artifactId>
         </dependency>
+        <!-- Service Locator Provider -->
+        <dependency>
+            <groupId>com.lightbend</groupId>
+            <artifactId>lagom13-java-service-locator-dns_2.11</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -63,6 +69,22 @@
                 <artifactId>lagom-maven-plugin</artifactId>
                 <configuration>
                     <lagomService>true</lagomService>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                    <images>
+                        <image>
+                            <build>
+                                <entryPoint>
+                                    java -cp '/maven/*' -Dplay.crypto.secret="${APPLICATION_SECRET:-none}" -Dplay.akka.actor-system="${AKKA_ACTOR_SYSTEM_NAME:-lagom-message-hub-liberty-integration}" -Dhttp.address="$LAGOM_MESSAGE_HUB_LIBERTY_INTEGRATION_BIND_IP" -Dhttp.port="$LAGOM_MESSAGE_HUB_LIBERTY_INTEGRATION_BIND_PORT" -Dakka.actor.provider=cluster -Dakka.remote.netty.tcp.hostname="$(eval "echo $AKKA_REMOTING_BIND_HOST")" -Dakka.remote.netty.tcp.port="$AKKA_REMOTING_BIND_PORT" -Dakka.cluster.seed-nodes.0="akka.tcp://${AKKA_ACTOR_SYSTEM_NAME}@${AKKA_SEED_NODE_HOST}:${AKKA_SEED_NODE_PORT}" -Dakka.io.dns.resolver=async-dns -Dakka.io.dns.async-dns.resolve-srv=true -Dakka.io.dns.async-dns.resolv-conf=on play.core.server.ProdServerStart
+                                </entryPoint>
+                            </build>
+                        </image>
+                    </images>
                 </configuration>
             </plugin>
         </plugins>

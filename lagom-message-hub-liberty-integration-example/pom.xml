@@ -63,8 +63,42 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.20.1</version>
+                <configuration>
+                    <skip>true</skip>
+                    <images>
+                        <image>
+                            <name>%g/%a:%l</name>
+                            <build>
+                                <from>openjdk:8-jre-alpine</from>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <assembly>
+                                    <descriptorRef>artifact-with-dependencies</descriptorRef>
+                                </assembly>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>akka-dns</id>
+            <name>akka-dns</name>
+            <url>https://dl.bintray.com/hajile/maven</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -75,10 +109,17 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <!-- Message Hub requires Kafka client version 0.10.2.1 -->
             <dependency>
                 <groupId>org.apache.kafka</groupId>
                 <artifactId>kafka-clients</artifactId>
                 <version>0.10.2.1</version>
+            </dependency>
+            <!-- Service Locator Provider -->
+            <dependency>
+                <groupId>com.lightbend</groupId>
+                <artifactId>lagom13-java-service-locator-dns_2.11</artifactId>
+                <version>2.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
