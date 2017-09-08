@@ -14,6 +14,6 @@ Each example is contained in its own directory within this project, and includes
 
 - [Lagom integration with IBM Message Hub](lagom-message-hub-example/)
 - [Lagom integration with IBM Message Hub and WebSphere Liberty](lagom-message-hub-liberty-integration-example/)
-
+- [Lagom integration with IBM Cloud Object Storage](lagom-cloud-object-storage-example/)
 
 This set of examples will grow over time as new integrations are developed.
