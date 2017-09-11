@@ -62,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
       // look up account by account number
       PersistentEntityRef<AccountCommand> ref = persistentEntityRegistry.refFor(AccountEntity.class, number);
       // forward command to entity
-      return ref.ask(AccountCommand.GetBalance.INSTANCE);
+      return ref.ask(AccountCommand.GetBalance.INSTANCE).thenApply(d -> Math.round2(d));
     };
   }
 

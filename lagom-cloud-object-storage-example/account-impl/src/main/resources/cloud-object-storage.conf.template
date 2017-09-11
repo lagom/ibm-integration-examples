@@ -1,0 +1,11 @@
+cloud-object-storage {
+
+  host = ""
+  bucket = ""
+  
+  credentials {
+    access-key-id = ""
+    secret-access-key = ""
+  }
+
+}

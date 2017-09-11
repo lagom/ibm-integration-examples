@@ -40,6 +40,10 @@
             <artifactId>lagom-javadsl-testkit_2.11</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>com.lightbend.akka</groupId>
+          <artifactId>akka-stream-alpakka-s3_2.11</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
