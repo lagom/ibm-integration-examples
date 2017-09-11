@@ -1,12 +1,10 @@
 /*
  * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
  */
-package com.lightbend.lagom.hello.impl;
+package com.lightbend.lagom.account.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
 import com.lightbend.lagom.serialization.Jsonable;
 
 import javax.annotation.concurrent.Immutable;

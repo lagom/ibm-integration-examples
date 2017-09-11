@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
  */
-package com.lightbend.lagom.hello.impl;
+package com.lightbend.lagom.account.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -10,6 +10,7 @@ import com.lightbend.lagom.javadsl.persistence.AggregateEventTag;
 import com.lightbend.lagom.serialization.Jsonable;
 
 import javax.annotation.concurrent.Immutable;
+import java.time.OffsetDateTime;
 
 /**
  * This interface defines all the events that the Account entity supports.
@@ -23,6 +24,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
 
   String getNumber();
   Double getAmount();
+  OffsetDateTime getDateTime();
 
   @Override
   default AggregateEventTag<AccountEvent> aggregateTag() {
@@ -36,6 +38,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
 
     private final String number;
     private final Double amount;
+    private final OffsetDateTime dateTime;
 
     @Override
     public String getNumber() {
@@ -47,11 +50,17 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
       return amount;
     }
 
+    @Override
+    public OffsetDateTime getDateTime() {
+      return dateTime;
+    }
+
 
     @JsonCreator
-    public DepositExecuted(Double amount, String number) {
+    public DepositExecuted(Double amount, String number, OffsetDateTime dateTime) {
       this.amount = amount;
       this.number = number;
+      this.dateTime = dateTime;
     }
 
     @Override
@@ -81,6 +90,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
 
     private final String number;
     private final Double amount;
+    private final OffsetDateTime dateTime;
 
     @Override
     public String getNumber() {
@@ -91,10 +101,17 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
     public Double getAmount() {
       return amount;
     }
+
+    @Override
+    public OffsetDateTime getDateTime() {
+      return dateTime;
+    }
+
     @JsonCreator
-    public WithdrawExecuted(Double amount, String number) {
+    public WithdrawExecuted(Double amount, String number, OffsetDateTime dateTime) {
       this.amount = amount;
       this.number = number;
+      this.dateTime = dateTime;
     }
 
     @Override

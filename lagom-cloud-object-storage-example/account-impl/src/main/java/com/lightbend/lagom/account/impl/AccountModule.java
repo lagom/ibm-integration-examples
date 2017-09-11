@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
  */
-package com.lightbend.lagom.hello.impl;
+package com.lightbend.lagom.account.impl;
 
 import com.google.inject.AbstractModule;
 import com.lightbend.lagom.javadsl.server.ServiceGuiceSupport;

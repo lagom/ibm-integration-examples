@@ -1,15 +1,16 @@
-package com.lightbend.lagom.hello.impl.readside;
+package com.lightbend.lagom.account.impl.readside;
 
 import akka.Done;
 import akka.japi.Pair;
 import akka.stream.javadsl.Flow;
-import com.lightbend.lagom.hello.impl.AccountEvent;
+import com.lightbend.lagom.account.impl.AccountEvent;
 import com.lightbend.lagom.javadsl.persistence.AggregateEventTag;
 import com.lightbend.lagom.javadsl.persistence.Offset;
 import com.lightbend.lagom.javadsl.persistence.ReadSideProcessor;
 import org.pcollections.PSequence;
 import org.pcollections.TreePVector;
 
+import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -17,6 +18,7 @@ public class AccountBalanceReportProcessor extends ReadSideProcessor<AccountEven
 
   final private AccountReportRepository repository;
 
+  @Inject
   public AccountBalanceReportProcessor(AccountReportRepository repository) {
     this.repository = repository;
   }

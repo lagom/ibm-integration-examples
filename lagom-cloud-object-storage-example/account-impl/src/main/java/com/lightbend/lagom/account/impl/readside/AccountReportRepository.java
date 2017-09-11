@@ -1,12 +1,13 @@
-package com.lightbend.lagom.hello.impl.readside;
+package com.lightbend.lagom.account.impl.readside;
 
 import akka.Done;
 import com.google.common.base.Preconditions;
-import com.lightbend.lagom.hello.impl.AccountEvent;
-import com.lightbend.lagom.hello.impl.AccountEvent.DepositExecuted;
-import com.lightbend.lagom.hello.impl.AccountEvent.WithdrawExecuted;
+import com.lightbend.lagom.account.impl.AccountEvent;
+import com.lightbend.lagom.account.impl.AccountEvent.DepositExecuted;
+import com.lightbend.lagom.account.impl.AccountEvent.WithdrawExecuted;
 import com.lightbend.lagom.javadsl.persistence.Offset;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -17,11 +18,10 @@ public class AccountReportRepository {
   private final Map<String, Report> reports = new HashMap<>();
   private final Storage storage;
 
+  @Inject
   public AccountReportRepository(Storage storage) {
     this.storage = storage;
   }
-
-
 
   /**
    * Handle the post added event.
@@ -31,11 +31,11 @@ public class AccountReportRepository {
     // match events per type
     if (evt instanceof DepositExecuted) {
       Report report = reports.getOrDefault(evt.getNumber(), Report.newReport(evt.getNumber()));
-      return save(report.newDeposit(new Transaction.Deposit(evt.getAmount())));
+      return save(report.newDeposit(evt.getAmount(), evt.getDateTime()));
 
     } else if (evt instanceof WithdrawExecuted) {
       Report report = Preconditions.checkNotNull(reports.get(evt.getNumber()), "Withdraw can't be the first generated event");
-      return save(report.newWithdraw(new Transaction.Withdraw(evt.getAmount())));
+      return save(report.newWithdraw(evt.getAmount(), evt.getDateTime()));
 
     } else {
       // keep going on unmatched events
@@ -50,12 +50,12 @@ public class AccountReportRepository {
 
     if (report.totalTransactions() == 5) {
 
-      // TODO:  generate json
-      String payload = report.toString();
+      // generate payload
+      String payload = ReportWriter.write(report);
 
       // save to cloud storage
       return storage
-              .save(payload)
+              .save(report.getId(), payload)
               .thenApply(
                       done -> {
                         // once file is uploaded, we can start a new report

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
  */
-package com.lightbend.lagom.hello.impl;
+package com.lightbend.lagom.account.impl;
 
 import akka.Done;
 import akka.actor.ActorSystem;
@@ -89,7 +89,7 @@ public class AccountEntityTest {
 
       if (outcome.getReplies().get(0) instanceof PersistentEntity.InvalidCommandException) {
         PersistentEntity.InvalidCommandException exception = (PersistentEntity.InvalidCommandException) outcome.getReplies().get(0);
-        assertEquals(exception.message(), "Insufficient startBalance");
+        assertEquals("Insufficient balance", exception.message());
       }
     }
 

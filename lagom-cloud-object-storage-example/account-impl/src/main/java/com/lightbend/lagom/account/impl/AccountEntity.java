@@ -1,8 +1,9 @@
 /*
  * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
  */
-package com.lightbend.lagom.hello.impl;
+package com.lightbend.lagom.account.impl;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
@@ -28,7 +29,7 @@ public class AccountEntity extends PersistentEntity<AccountCommand, AccountEvent
             AccountCommand.Deposit.class,
             (cmd, ctx) -> {
               return ctx.thenPersist(
-                      new AccountEvent.DepositExecuted(cmd.amount, entityId()),
+                      new AccountEvent.DepositExecuted(cmd.amount, entityId(), OffsetDateTime.now()),
                       evt -> ctx.reply(Done.getInstance())
               );
             }
@@ -39,7 +40,7 @@ public class AccountEntity extends PersistentEntity<AccountCommand, AccountEvent
             (cmd, ctx) -> {
               if (state().withdrawAllowed(cmd.amount)) {
                 return ctx.thenPersist(
-                        new AccountEvent.WithdrawExecuted(cmd.amount, entityId()),
+                        new AccountEvent.WithdrawExecuted(cmd.amount, entityId(), OffsetDateTime.now()),
                         evt -> ctx.reply(Done.getInstance())
                 );
               } else {
