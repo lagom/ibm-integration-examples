@@ -3,6 +3,7 @@ package com.lightbend.lagom.account.impl;
 import com.lightbend.lagom.account.impl.readside.Report;
 import org.junit.Test;
 
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -15,10 +16,10 @@ public class ReportTest {
 
     Report r1 = Report.newReport("abc");
 
-    Report r2 = r1.newDeposit(10.0)
-                  .newDeposit(20.0)
-                  .newWithdraw(20.0)
-                  .newDeposit(100.0);
+    Report r2 = r1.newDeposit(10.0, OffsetDateTime.now())
+                  .newDeposit(20.0, OffsetDateTime.now())
+                  .newWithdraw(20.0, OffsetDateTime.now())
+                  .newDeposit(100.0, OffsetDateTime.now());
 
 
     assertEquals(4, r2.totalTransactions());
@@ -35,7 +36,7 @@ public class ReportTest {
     // new reports has not transactions
     assertEquals(0, r3.totalTransactions());
     assertEquals(110.0, r3.startBalance, 0.0);
-    assertEquals(0.0, r3.endBalance, 0.0);
+    assertEquals(110.0, r3.endBalance, 0.0);
 
   }
 }

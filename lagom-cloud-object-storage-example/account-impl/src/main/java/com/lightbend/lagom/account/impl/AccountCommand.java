@@ -25,6 +25,7 @@ public interface AccountCommand extends Jsonable {
   enum GetBalance implements AccountCommand, PersistentEntity.ReplyType<Double> {
     INSTANCE
   }
+
   /**
    * A command to add a deposit.
    * <p>
@@ -35,26 +36,12 @@ public interface AccountCommand extends Jsonable {
   @Immutable
   @JsonDeserialize
   public final class Deposit implements AccountCommand, Jsonable, PersistentEntity.ReplyType<Done> {
-    public final Double amount;
+    public final double amount;
 
     @JsonCreator
-    public Deposit(Double amount) {
-      this.amount = Preconditions.checkNotNull(amount, "amount");
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-
-      Deposit deposit = (Deposit) o;
-
-      return amount != null ? amount.equals(deposit.amount) : deposit.amount == null;
-    }
-
-    @Override
-    public int hashCode() {
-      return amount != null ? amount.hashCode() : 0;
+    public Deposit(double amount) {
+      assert amount >= 0.0;
+      this.amount = amount;
     }
 
   }
@@ -70,27 +57,14 @@ public interface AccountCommand extends Jsonable {
   @Immutable
   @JsonDeserialize
   public final class Withdraw implements AccountCommand, Jsonable, PersistentEntity.ReplyType<Done> {
-    public final Double amount;
+    public final double amount;
 
     @JsonCreator
-    public Withdraw(Double amount) {
-      this.amount = Preconditions.checkNotNull(amount, "amount");
+    public Withdraw(double amount) {
+      assert amount >= 0.0;
+      this.amount = amount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-
-      Withdraw withdraw = (Withdraw) o;
-
-      return amount != null ? amount.equals(withdraw.amount) : withdraw.amount == null;
-    }
-
-    @Override
-    public int hashCode() {
-      return amount != null ? amount.hashCode() : 0;
-    }
   }
 
 }

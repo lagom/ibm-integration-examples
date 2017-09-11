@@ -23,7 +23,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
   AggregateEventTag<AccountEvent> TAG = AggregateEventTag.of(AccountEvent.class);
 
   String getNumber();
-  Double getAmount();
+  double getAmount();
   OffsetDateTime getDateTime();
 
   @Override
@@ -37,7 +37,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
   public final class DepositExecuted implements AccountEvent {
 
     private final String number;
-    private final Double amount;
+    private final double amount;
     private final OffsetDateTime dateTime;
 
     @Override
@@ -46,7 +46,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
     }
 
     @Override
-    public Double getAmount() {
+    public double getAmount() {
       return amount;
     }
 
@@ -57,28 +57,10 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
 
 
     @JsonCreator
-    public DepositExecuted(Double amount, String number, OffsetDateTime dateTime) {
+    public DepositExecuted(double amount, String number, OffsetDateTime dateTime) {
       this.amount = amount;
       this.number = number;
       this.dateTime = dateTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-
-      DepositExecuted that = (DepositExecuted) o;
-
-      if (number != null ? !number.equals(that.number) : that.number != null) return false;
-      return amount != null ? amount.equals(that.amount) : that.amount == null;
-    }
-
-    @Override
-    public int hashCode() {
-      int result = number != null ? number.hashCode() : 0;
-      result = 31 * result + (amount != null ? amount.hashCode() : 0);
-      return result;
     }
 
   }
@@ -89,7 +71,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
   public final class WithdrawExecuted implements AccountEvent {
 
     private final String number;
-    private final Double amount;
+    private final double amount;
     private final OffsetDateTime dateTime;
 
     @Override
@@ -98,7 +80,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
     }
 
     @Override
-    public Double getAmount() {
+    public double getAmount() {
       return amount;
     }
 
@@ -108,28 +90,10 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
     }
 
     @JsonCreator
-    public WithdrawExecuted(Double amount, String number, OffsetDateTime dateTime) {
+    public WithdrawExecuted(double amount, String number, OffsetDateTime dateTime) {
       this.amount = amount;
       this.number = number;
       this.dateTime = dateTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-
-      WithdrawExecuted that = (WithdrawExecuted) o;
-
-      if (amount != null ? !amount.equals(that.amount) : that.amount != null) return false;
-      return number != null ? number.equals(that.number) : that.number == null;
-    }
-
-    @Override
-    public int hashCode() {
-      int result = amount != null ? amount.hashCode() : 0;
-      result = 31 * result + (number != null ? number.hashCode() : 0);
-      return result;
     }
   }
 }

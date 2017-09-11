@@ -49,7 +49,6 @@ public class AccountReportRepository {
   private CompletionStage<Done> save(Report report) {
 
     if (report.totalTransactions() == 5) {
-
       // generate payload
       String payload = ReportWriter.write(report);
 

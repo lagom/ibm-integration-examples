@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 
 public interface Transaction {
 
-  Double getAmount();
+  double getAmount();
 
   String getLabel();
 
@@ -15,13 +15,13 @@ public interface Transaction {
     private final Double amount;
     private final OffsetDateTime dateTime;
 
-    public Withdraw(Double amount, OffsetDateTime dateTime) {
+    public Withdraw(double amount, OffsetDateTime dateTime) {
       this.amount = amount;
       this.dateTime = dateTime;
     }
 
     @Override
-    public Double getAmount() {
+    public double getAmount() {
       return amount;
     }
 
@@ -38,16 +38,16 @@ public interface Transaction {
 
   public final class Deposit implements Transaction {
 
-    private final Double amount;
+    private final double amount;
     private final OffsetDateTime dateTime;
 
-    public Deposit(Double amount, OffsetDateTime dateTime) {
+    public Deposit(double amount, OffsetDateTime dateTime) {
       this.amount = amount;
       this.dateTime = dateTime;
     }
 
     @Override
-    public Double getAmount() {
+    public double getAmount() {
       return amount;
     }
 

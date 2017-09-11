@@ -11,14 +11,14 @@ import java.util.List;
 public class Report {
 
   public final String accountNumber;
-  public final Double startBalance;
-  public final Double endBalance;
+  public final double startBalance;
+  public final double endBalance;
   public final int number;
   private final List<Transaction> transactions;
 
   public Report(String accountNumber,
-                Double startBalance,
-                Double endBalance,
+                double startBalance,
+                double endBalance,
                 int number,
                 List<Transaction> transactions) {
 
@@ -74,7 +74,7 @@ public class Report {
     );
   }
 
-  public Report newDeposit(Double amount, OffsetDateTime dateTime) {
+  public Report newDeposit(double amount, OffsetDateTime dateTime) {
     return newDeposit(new Transaction.Deposit(amount, dateTime));
   }
 
@@ -89,7 +89,7 @@ public class Report {
   }
 
 
-  public Report newWithdraw(Double amount, OffsetDateTime dateTime) {
+  public Report newWithdraw(double amount, OffsetDateTime dateTime) {
     return newWithdraw(new Transaction.Withdraw(amount, dateTime));
   }
 
