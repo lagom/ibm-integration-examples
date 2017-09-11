@@ -26,12 +26,12 @@ public class ReportTest {
     assertEquals(0.0, r2.startBalance, 0.0);
     assertEquals(110.0, r2.endBalance, 0.0);
 
-    assertEquals("abc_1", r2.getId());
-    assertEquals(Collections.singletonList("abc_1"), r2.getAllIds());
+    assertEquals("account-report_abc_1", r2.getId());
+    assertEquals(Collections.singletonList("account-report_abc_1"), r2.getAllIds());
 
 
     Report r3 = r2.newReport();
-    assertEquals(Arrays.asList("abc_1", "abc_2"), r3.getAllIds());
+    assertEquals(Arrays.asList("account-report_abc_1", "account-report_abc_2"), r3.getAllIds());
 
     // new reports has not transactions
     assertEquals(0, r3.totalTransactions());

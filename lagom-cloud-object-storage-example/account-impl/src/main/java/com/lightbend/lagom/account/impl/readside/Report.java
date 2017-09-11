@@ -38,7 +38,7 @@ public class Report {
   }
 
   private String buildId(int number) {
-    return accountNumber + "_" + number;
+    return "account-report_" + accountNumber + "_" + number;
   }
 
   public List<String> getAllIds() {
