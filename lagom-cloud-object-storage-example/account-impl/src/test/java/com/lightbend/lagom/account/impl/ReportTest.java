@@ -33,7 +33,7 @@ public class ReportTest {
     Report r3 = r2.newReport();
     assertEquals(Arrays.asList("account-report_abc_1", "account-report_abc_2"), r3.getAllIds());
 
-    // new reports has not transactions
+    // new reports has no transactions
     assertEquals(0, r3.totalTransactions());
     assertEquals(110.0, r3.startBalance, 0.0);
     assertEquals(110.0, r3.endBalance, 0.0);

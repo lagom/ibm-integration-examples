@@ -2,6 +2,8 @@ package com.lightbend.lagom.account.impl.readside;
 
 
 import com.lightbend.lagom.account.impl.Math;
+import org.pcollections.PCollection;
+import org.pcollections.TreePVector;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -14,13 +16,13 @@ public class Report {
   public final double startBalance;
   public final double endBalance;
   public final int number;
-  private final List<Transaction> transactions;
+  private final PCollection<Transaction> transactions;
 
   public Report(String accountNumber,
                 double startBalance,
                 double endBalance,
                 int number,
-                List<Transaction> transactions) {
+                PCollection<Transaction> transactions) {
 
     this.accountNumber = accountNumber;
     this.startBalance = startBalance;
@@ -60,7 +62,7 @@ public class Report {
             endBalance, // current balance is start balance in new report
             endBalance,
             number + 1, // increase report number by 1
-            new ArrayList<>()
+            TreePVector.empty()
     );
   }
 
@@ -70,7 +72,7 @@ public class Report {
             0.0,
             0.0,
             1, // number start with 1
-            new ArrayList<>()
+            TreePVector.empty()
     );
   }
 
@@ -84,7 +86,7 @@ public class Report {
             startBalance,
             Math.round2(endBalance + deposit.getAmount()),
             number,
-            newTransactions(deposit)
+            transactions.plus(deposit)
     );
   }
 
@@ -99,18 +101,11 @@ public class Report {
             startBalance,
             Math.round2(endBalance - withdraw.getAmount()),
             number,
-            newTransactions(withdraw)
+            transactions.plus(withdraw)
     );
   }
 
-  private List<Transaction> newTransactions(Transaction tx) {
-    List<Transaction> newTx = new ArrayList<>(transactions.size() + 1);
-    newTx.addAll(transactions);
-    newTx.add(tx);
-    return newTx;
-  }
-
-  public List<Transaction> getTransactions() {
-    return Collections.unmodifiableList(transactions);
+  public PCollection<Transaction> getTransactions() {
+    return transactions;
   }
 }
