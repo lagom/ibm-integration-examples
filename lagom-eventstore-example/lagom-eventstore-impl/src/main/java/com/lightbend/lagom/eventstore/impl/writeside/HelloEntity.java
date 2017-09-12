@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
  */
-package com.lightbend.lagom.eventstore.impl;
+package com.lightbend.lagom.eventstore.impl.writeside;
 
 import akka.Done;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
@@ -16,12 +16,15 @@ public class HelloEntity extends PersistentEntity<HelloCommand, HelloEvent, Gree
         GreetingsState greetingsState = new GreetingsState(name);
         BehaviorBuilder b = newBehaviorBuilder(snapshotState.orElse(greetingsState));
 
-        b.setCommandHandler(HelloCommand.Greet.class, (cmd, ctx) ->
-                ctx.thenPersist(new HelloEvent.Greeted(entityId()),
-                        evt -> ctx.reply(Done.getInstance())));
+        b.setCommandHandler(HelloCommand.Greet.class,
+                (cmd, ctx) -> ctx.thenPersist(
+                        new HelloEvent.Greeted(entityId(), System.currentTimeMillis()),
+                        evt -> ctx.reply(Done.getInstance()))
+        );
 
         b.setEventHandler(HelloEvent.Greeted.class,
-                evt -> state());
+                evt -> state()
+        );
 
         return b.build();
     }

@@ -64,6 +64,7 @@
         </plugins>
     </build>
 
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -72,6 +73,11 @@
                 <version>${lagom.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.lightbend.lagom</groupId>
+                <artifactId>lagom-logback_2.11</artifactId>
+                <version>${lagom.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
