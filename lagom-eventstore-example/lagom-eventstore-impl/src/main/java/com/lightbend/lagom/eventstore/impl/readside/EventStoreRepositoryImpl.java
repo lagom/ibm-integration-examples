@@ -1,5 +1,7 @@
+/*
+ * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
+ */
 package com.lightbend.lagom.eventstore.impl.readside;
-
 
 import akka.Done;
 import com.ibm.event.catalog.ResolvedTableSchema;
