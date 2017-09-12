@@ -6,49 +6,30 @@ import org.pcollections.PCollection;
 import org.pcollections.TreePVector;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Report {
 
   public final String accountNumber;
   public final double startBalance;
   public final double endBalance;
-  public final int number;
+  public final int reportNumber;
   private final PCollection<Transaction> transactions;
 
   public Report(String accountNumber,
                 double startBalance,
                 double endBalance,
-                int number,
+                int reportNumber,
                 PCollection<Transaction> transactions) {
 
     this.accountNumber = accountNumber;
     this.startBalance = startBalance;
     this.endBalance = endBalance;
-    this.number = number;
+    this.reportNumber = reportNumber;
     this.transactions = transactions;
   }
 
   public int totalTransactions() {
     return transactions.size();
-  }
-
-  public String getId() {
-    return buildId(number);
-  }
-
-  private String buildId(int number) {
-    return "account-report_" + accountNumber + "_" + number;
-  }
-
-  public List<String> getAllIds() {
-    List<String> ids = new ArrayList<>();
-    for (int i = 1; i <= number; i++) {
-      ids.add(buildId(i));
-    }
-    return ids;
   }
 
   /**
@@ -61,7 +42,7 @@ public class Report {
             accountNumber,
             endBalance, // current balance is start balance in new report
             endBalance,
-            number + 1, // increase report number by 1
+            reportNumber + 1, // increase report reportNumber by 1
             TreePVector.empty()
     );
   }
@@ -71,7 +52,7 @@ public class Report {
             accountNumber,
             0.0,
             0.0,
-            1, // number start with 1
+            1, // reportNumber start with 1
             TreePVector.empty()
     );
   }
@@ -85,7 +66,7 @@ public class Report {
             accountNumber,
             startBalance,
             Math.round2(endBalance + deposit.getAmount()),
-            number,
+            reportNumber,
             transactions.plus(deposit)
     );
   }
@@ -100,7 +81,7 @@ public class Report {
             accountNumber,
             startBalance,
             Math.round2(endBalance - withdraw.getAmount()),
-            number,
+            reportNumber,
             transactions.plus(withdraw)
     );
   }

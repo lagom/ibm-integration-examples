@@ -13,11 +13,13 @@ import com.lightbend.lagom.javadsl.api.ServiceCall;
 
 public interface AccountService extends Service {
 
-  ServiceCall<Transaction, NotUsed> deposit(String number);
+  ServiceCall<Transaction, NotUsed> deposit(String accountNumber);
 
-  ServiceCall<Transaction, NotUsed> withdraw(String number);
+  ServiceCall<Transaction, NotUsed> withdraw(String accountNumber);
 
-  ServiceCall<NotUsed, Double> balance(String number);
+  ServiceCall<NotUsed, Double> balance(String accountNumber);
+
+  ServiceCall<NotUsed, String> report(String accountNumber, int reportNumber);
 
   @Override
   default Descriptor descriptor() {
@@ -25,7 +27,8 @@ public interface AccountService extends Service {
     return named("account").withCalls(
         pathCall("/api/account/:number/balance", this::balance),
         pathCall("/api/account/:number/deposit",  this::deposit),
-        pathCall("/api/account/:number/withdraw", this::withdraw)
+        pathCall("/api/account/:number/withdraw", this::withdraw),
+        pathCall("/api/account/:number/report/:report", this::report)
       ).withAutoAcl(true);
     // @formatter:on
   }

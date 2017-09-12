@@ -4,8 +4,6 @@ import com.lightbend.lagom.account.impl.readside.Report;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.Collections;
 
 import static org.junit.Assert.*;
 
@@ -26,12 +24,12 @@ public class ReportTest {
     assertEquals(0.0, r2.startBalance, 0.0);
     assertEquals(110.0, r2.endBalance, 0.0);
 
-    assertEquals("account-report_abc_1", r2.getId());
-    assertEquals(Collections.singletonList("account-report_abc_1"), r2.getAllIds());
+    assertEquals(1, r2.reportNumber);
+
 
 
     Report r3 = r2.newReport();
-    assertEquals(Arrays.asList("account-report_abc_1", "account-report_abc_2"), r3.getAllIds());
+    assertEquals(2, r3.reportNumber);
 
     // new reports has no transactions
     assertEquals(0, r3.totalTransactions());

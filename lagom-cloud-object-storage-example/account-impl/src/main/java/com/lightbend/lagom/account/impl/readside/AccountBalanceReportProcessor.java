@@ -16,10 +16,10 @@ import java.util.concurrent.CompletionStage;
 
 public class AccountBalanceReportProcessor extends ReadSideProcessor<AccountEvent> {
 
-  final private AccountReportRepository repository;
+  final private AccountReportRepositoryImpl repository;
 
   @Inject
-  public AccountBalanceReportProcessor(AccountReportRepository repository) {
+  public AccountBalanceReportProcessor(AccountReportRepositoryImpl repository) {
     this.repository = repository;
   }
 

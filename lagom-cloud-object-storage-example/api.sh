@@ -1,5 +1,5 @@
 
-account.get() {
+account.balance() {
   http localhost:9000/api/account/$1/balance --verbose
 }
 
@@ -27,6 +27,6 @@ EOF
   http POST localhost:9000/api/account/$1/withdraw --verbose < /tmp/last.json
 }
 
-account.reports() {
-  http localhost:9000/api/account/$1/reports --verbose
+account.report() {
+  http localhost:9000/api/account/$1/report/$2 --verbose
 }
