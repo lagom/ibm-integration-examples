@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ReportWriter {
   static String write(Report report) {
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
     sb.append("ACCOUNT: ").append(report.accountNumber).append("\n");
     sb.append("REPORT: ").append(report.getId()).append("\n");
