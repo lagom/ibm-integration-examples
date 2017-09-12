@@ -6,6 +6,7 @@ public class Transaction {
 
   final public Double amount;
 
+  @JsonCreator
   public Transaction(Double amount) {
     // transactions must be positive numbers.
     // Deposit and withdrawn are handled via API contract.

@@ -7,24 +7,24 @@ import org.pcollections.TreePVector;
 
 import java.time.OffsetDateTime;
 
-public class Report {
+public class Extract {
 
   public final String accountNumber;
   public final double startBalance;
   public final double endBalance;
-  public final int reportNumber;
+  public final int extractNumber;
   private final PCollection<Transaction> transactions;
 
-  public Report(String accountNumber,
-                double startBalance,
-                double endBalance,
-                int reportNumber,
-                PCollection<Transaction> transactions) {
+  public Extract(String accountNumber,
+                 double startBalance,
+                 double endBalance,
+                 int extractNumber,
+                 PCollection<Transaction> transactions) {
 
     this.accountNumber = accountNumber;
     this.startBalance = startBalance;
     this.endBalance = endBalance;
-    this.reportNumber = reportNumber;
+    this.extractNumber = extractNumber;
     this.transactions = transactions;
   }
 
@@ -33,55 +33,55 @@ public class Report {
   }
 
   /**
-   * Builds a new report based on this one.
+   * Builds a new extract based on this one.
    *
-   * New Report will have no transactions and its start balance equals the previous end balance.
+   * New Extract will have no transactions and its start balance equals the previous end balance.
    */
-  public Report newReport() {
-    return new Report(
+  public Extract newExtract() {
+    return new Extract(
             accountNumber,
-            endBalance, // current balance is start balance in new report
+            endBalance, // current balance is start balance in new extract
             endBalance,
-            reportNumber + 1, // increase report reportNumber by 1
+            extractNumber + 1, // increase extractNumber by 1
             TreePVector.empty()
     );
   }
 
-  public static Report newReport(String accountNumber) {
-    return new Report(
+  public static Extract newExtract(String accountNumber) {
+    return new Extract(
             accountNumber,
             0.0,
             0.0,
-            1, // reportNumber start with 1
+            1, // extractNumber start with 1
             TreePVector.empty()
     );
   }
 
-  public Report newDeposit(double amount, OffsetDateTime dateTime) {
+  public Extract newDeposit(double amount, OffsetDateTime dateTime) {
     return newDeposit(new Transaction.Deposit(amount, dateTime));
   }
 
-  public Report newDeposit(Transaction.Deposit deposit) {
-    return new Report(
+  public Extract newDeposit(Transaction.Deposit deposit) {
+    return new Extract(
             accountNumber,
             startBalance,
             Math.round2(endBalance + deposit.getAmount()),
-            reportNumber,
+            extractNumber,
             transactions.plus(deposit)
     );
   }
 
 
-  public Report newWithdraw(double amount, OffsetDateTime dateTime) {
+  public Extract newWithdraw(double amount, OffsetDateTime dateTime) {
     return newWithdraw(new Transaction.Withdraw(amount, dateTime));
   }
 
-  public Report newWithdraw(Transaction.Withdraw withdraw) {
-    return new Report(
+  public Extract newWithdraw(Transaction.Withdraw withdraw) {
+    return new Extract(
             accountNumber,
             startBalance,
             Math.round2(endBalance - withdraw.getAmount()),
-            reportNumber,
+            extractNumber,
             transactions.plus(withdraw)
     );
   }

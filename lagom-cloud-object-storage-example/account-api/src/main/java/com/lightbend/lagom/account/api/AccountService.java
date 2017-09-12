@@ -19,16 +19,16 @@ public interface AccountService extends Service {
 
   ServiceCall<NotUsed, Double> balance(String accountNumber);
 
-  ServiceCall<NotUsed, String> report(String accountNumber, int reportNumber);
+  ServiceCall<NotUsed, String> extract(String accountNumber, int extractNumber);
 
   @Override
   default Descriptor descriptor() {
     // @formatter:off
     return named("account").withCalls(
-        pathCall("/api/account/:number/balance", this::balance),
-        pathCall("/api/account/:number/deposit",  this::deposit),
-        pathCall("/api/account/:number/withdraw", this::withdraw),
-        pathCall("/api/account/:number/report/:report", this::report)
+        pathCall("/api/account/:accountNumber/balance", this::balance),
+        pathCall("/api/account/:accountNumber/deposit",  this::deposit),
+        pathCall("/api/account/:accountNumber/withdraw", this::withdraw),
+        pathCall("/api/account/:accountNumber/extract/:extractNumber", this::extract)
       ).withAutoAcl(true);
     // @formatter:on
   }

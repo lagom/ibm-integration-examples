@@ -10,7 +10,7 @@ import org.pcollections.TreePVector;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ReportWriter {
+public class ExtractWriter {
 
   private static ObjectMapper mapper = new ObjectMapper();
 
@@ -21,28 +21,28 @@ public class ReportWriter {
 
 
 
-  static String write(Report report) {
+  static String write(Extract extract) {
     try {
-      return mapper.writeValueAsString(toApi(report));
+      return mapper.writeValueAsString(toApi(extract));
     } catch (JsonProcessingException e) {
       throw new RuntimeException(e);
     }
   }
 
 
-  private static com.lightbend.lagom.account.api.Report toApi(Report report) {
+  private static com.lightbend.lagom.account.api.Extract toApi(Extract extract) {
 
     List<TransactionEntry> lines =
-            report.getTransactions()
+            extract.getTransactions()
               .stream()
               .map( tx -> new TransactionEntry(tx.getLabel(), tx.getDateTime(), tx.getAmount()))
               .collect(Collectors.toList());
 
-    return new com.lightbend.lagom.account.api.Report(
-      report.accountNumber,
-      report.reportNumber,
-      report.startBalance,
-      report.endBalance,
+    return new com.lightbend.lagom.account.api.Extract(
+      extract.accountNumber,
+      extract.extractNumber,
+      extract.startBalance,
+      extract.endBalance,
       TreePVector.from(lines)
     );
   }

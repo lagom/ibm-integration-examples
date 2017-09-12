@@ -7,11 +7,11 @@ import com.lightbend.lagom.javadsl.persistence.Offset;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
-public interface AccountReportRepository {
+public interface AccountExtractRepository {
 
   CompletionStage<Done> handleEvent(AccountEvent evt, Offset offset);
 
-  Optional<Report> findByAccountNumber(String accountNumber);
+  Optional<Extract> findByAccountNumber(String accountNumber);
 
-  CompletionStage<String> findReportByNumber(String accountNumber, int reportNumber);
+  CompletionStage<String> findExtract(String accountNumber, int extractNumber);
 }

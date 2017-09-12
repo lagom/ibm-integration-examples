@@ -1,3 +1,4 @@
+
 package com.lightbend.lagom.account.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;

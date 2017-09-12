@@ -3,7 +3,7 @@ package com.lightbend.lagom.account.api;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import org.pcollections.PCollection;
 
-public class Report {
+public class Extract {
 
 
   public final String accountNumber;
@@ -13,11 +13,11 @@ public class Report {
   public final PCollection<TransactionEntry> transactionEntries;
 
   @JsonCreator
-  public Report(String accountNumber,
-                Integer extractNumber,
-                double startBalance,
-                double endBalance,
-                PCollection<TransactionEntry> transactionEntries) {
+  public Extract(String accountNumber,
+                 Integer extractNumber,
+                 double startBalance,
+                 double endBalance,
+                 PCollection<TransactionEntry> transactionEntries) {
 
     this.accountNumber = accountNumber;
     this.extractNumber = extractNumber;

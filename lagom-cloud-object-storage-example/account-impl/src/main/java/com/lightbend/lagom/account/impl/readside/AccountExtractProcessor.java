@@ -14,12 +14,12 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-public class AccountBalanceReportProcessor extends ReadSideProcessor<AccountEvent> {
+public class AccountExtractProcessor extends ReadSideProcessor<AccountEvent> {
 
-  final private AccountReportRepositoryImpl repository;
+  final private AccountExtractRepositoryImpl repository;
 
   @Inject
-  public AccountBalanceReportProcessor(AccountReportRepositoryImpl repository) {
+  public AccountExtractProcessor(AccountExtractRepositoryImpl repository) {
     this.repository = repository;
   }
 

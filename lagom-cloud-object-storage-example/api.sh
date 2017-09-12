@@ -27,6 +27,6 @@ EOF
   http POST localhost:9000/api/account/$1/withdraw --verbose < /tmp/last.json
 }
 
-account.report() {
-  http localhost:9000/api/account/$1/report/$2 --verbose
+account.extract() {
+  http localhost:9000/api/account/$1/extract/$2 --verbose
 }
