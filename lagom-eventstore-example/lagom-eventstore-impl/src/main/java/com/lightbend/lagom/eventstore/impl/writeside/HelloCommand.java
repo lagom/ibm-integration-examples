@@ -10,6 +10,9 @@ import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import com.lightbend.lagom.serialization.CompressedJsonable;
 import com.lightbend.lagom.serialization.Jsonable;
 
+// This inteface identifies all commands a HelloEntity is able to prcess.
+// It extends Jsonable to the Lagom cluster can serialize a command sent from one node of
+// the cluster to another node using a JSON format.
 public interface HelloCommand extends Jsonable {
 
     Greet GREET_INSTANCE = new HelloCommand.Greet();

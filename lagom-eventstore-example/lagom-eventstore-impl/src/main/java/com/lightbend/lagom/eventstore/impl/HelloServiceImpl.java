@@ -13,6 +13,8 @@ import com.lightbend.lagom.javadsl.persistence.PersistentEntityRegistry;
 
 import javax.inject.Inject;
 
+// A Minimal Lagom Service with an endpoint to send greetings to other users.
+// This is a simplified example for demo purposes.
 public class HelloServiceImpl implements HelloService {
 
     private final PersistentEntityRegistry persistentEntityRegistry;
@@ -25,10 +27,15 @@ public class HelloServiceImpl implements HelloService {
 
     @Override
     public ServiceCall<NotUsed, String> hello(String id) {
-        return request -> {
-            PersistentEntityRef<HelloCommand> ref = persistentEntityRegistry.refFor(HelloEntity.class, id);
-            return ref.ask(HelloCommand.GREET_INSTANCE).thenApply(ignored -> "Hi!");
-        };
+        return
+                request ->
+                        persistentEntityRegistry
+                                // get the persistent instance with entityId == 'id'
+                                .refFor(HelloEntity.class, id)
+                                // send a command to that instance
+                                .ask(HelloCommand.GREET_INSTANCE)
+                                // ignore the response from the entity and send "Hi" back as the HTTP response
+                                .thenApply(ignored -> "Hi!");
     }
 
 }

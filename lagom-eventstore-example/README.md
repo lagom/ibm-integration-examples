@@ -2,7 +2,7 @@
 
 [IBM Project EventStore](https://www.ibm.com/us-en/marketplace/project-eventstore) is an in-memory database designed for massive structured data volumes and real-time analytics built on Apache SPARK and Apache Parquet Data Format. 
 
-This project demonstrates a simple Lagom service that includes a [Read-Side](https://www.lagomframework.com/documentation/current/java/ReadSide.html) processor which stores events of the [Persistent Entities](https://www.lagomframework.com/documentation/current/java/ReadSide.html) into Project EventStore for further analysis.
+This project demonstrates a simple Lagom service that includes a [Read-Side](https://www.lagomframework.com/documentation/current/java/ReadSide.html) processor which stores events of the [Persistent Entities](https://www.lagomframework.com/documentation/1.3.x/java/PersistentEntity.html) into Project EventStore for further analysis.
 
 The Lagom service exposes a single HTTP endpoint to simulate events.
 
@@ -24,19 +24,20 @@ Once you have an IBM Project EventStore running in your machine, the main steps 
 
 ## Download and set up the Lagom service
 
-Follow these steps to get a local copy of this project and configure it with the Message Hub credentials you saved in the previous step. You can supply the credentials in a configuration file or as environment variables.
+Follow these steps to get a local copy of this project and configure it to connect it to the IBM Project EventStore running on your machine
 
 1.  Open a command line shell and clone this repository:
     ```
-    git clone https://github.com/typesafehub/lagom-ibm-integration-examples.git
+    git clone https://github.com/lagom/ibm-integration-examples.git
     ```
 2.  Change into the root directory for this example:
     ```
     cd lagom-eventstore-example
     ```
 3.  To supply the configuration, do one of the following:
-    1. Open the `lagom-eventstore-impl/src/main/resources/ibm-event-store.conf` file in a text editor and fill in the empty values of the `endpoints` and `db.name`. The `db.name` is not hardcoded because IBM Project EventStore can only hold one database at the same time so if you already have a database you may reuse it and add the example tables on that schema.
-    2. If you prefer not to enter credentials into the file, you can also set them as environment variables named `IBM_EVENTSTORE_ENDPOINTS`,  and `IBM_EVENTSTORE_DATABASE_NAME`.
+    1. Open the `lagom-eventstore-impl/src/main/resources/ibm-event-store.conf` file in a text editor and fill in the empty value of the `endpoints` setting.
+    2. On the same file, provide the value of the `db.name` setting. The `db.name` is not hardcoded because IBM Project EventStore can only hold one database at the same time. If you already have a database and its name is different than the name you want Lagom to use you will have to remove the database from the IBM Proeject EventStore manually.
+    3. If you prefer not to enter credentials into the file, you can also set them as environment variables named `IBM_EVENTSTORE_ENDPOINTS`,  and `IBM_EVENTSTORE_DATABASE_NAME`.
 
 ## Start the Lagom sample application
 
@@ -76,7 +77,16 @@ You may also want to send greetings to other users:
 4.  (repeat the previous step several times)
 
 
-You may even use traffic generation tools like [JMeter](http://jmeter.apache.org/), [Gatling](http://gatling.io/), [ab](https://httpd.apache.org/docs/2.4/programs/ab.html) or [wrk](https://github.com/wg/wrk) to generate massive amounts of requests.
+Here you should use a traffic generation tool like [JMeter](http://jmeter.apache.org/), [Gatling](http://gatling.io/), [ab](https://httpd.apache.org/docs/2.4/programs/ab.html) or [wrk](https://github.com/wg/wrk) to generate massive amounts of requests.
+
+For example:
+
+```
+wrk http://localhost:9000/api/hello/Janine
+wrk http://localhost:9000/api/hello/Albert
+wrk http://localhost:9000/api/hello/Billy
+wrk http://localhost:9000/api/hello/Samantha
+```
 
 ## Analyse the traffic using IBM Project EventStore Notebooks
 
@@ -97,3 +107,19 @@ To stop running the service:
 1.  Press "Enter" in the console running the Lagom development environment to stop the service.
 2.  Bring the UI of IBM Project EventStore to the foreground, click on the cog at the top right corner and select `Quit`.
 
+
+Press "Enter" in the console running the Lagom development environment to stop the service.
+
+## Next steps
+
+To understand more about how Lagom can be configured to work with IBM Project EventStore, review the following files in this project's source code:
+
+- [`pom.xml`](pom.xml) and [`lagom-eventstore-impl/pom.xml`](lagom-eventstore-impl/pom.xml) — dependency configuration
+- [`ibm-event-store.conf`](lagom-eventstore-impl/src/main/resources/ibm-event-store.conf) — database connection configuration
+
+The relevant code in this example is located on the `com.lightbend.lagom.eventstore.impl.readside`package:
+
+- [`GreetingsRepository.java`](lagom-eventstore-impl/src/main/java/com/lightbend/lagom/eventstore/impl/readside/GreetingsRepository.java) — a Lagom Read-Side that processes Persistent Entity events and stores them into IBM Project EventStore.
+- [`EventStoreRepositoryImpl.java`](lagom-eventstore-impl/src/main/java/com/lightbend/lagom/eventstore/impl/readside/EventStoreRepositoryImpl.java) — A Facade encapsulating the IBM Event API.
+
+The code on the `com.lightbend.lagom.eventstore.impl.writeside` package is the minimum required to have a Persistent Entity which produces an eventstream. This example uses a Cassandra storage for the Persistent Entity Journal. Check out the [Lagom integration with IBM Db2 and JPA](../lagom-jpa-db2-example/README.md) for an example on using a different backend for your Persistent Entities.

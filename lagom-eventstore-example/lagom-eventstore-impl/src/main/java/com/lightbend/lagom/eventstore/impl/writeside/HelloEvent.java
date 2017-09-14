@@ -10,8 +10,13 @@ import com.lightbend.lagom.javadsl.persistence.AggregateEventShards;
 import com.lightbend.lagom.javadsl.persistence.AggregateEventTag;
 import com.lightbend.lagom.serialization.Jsonable;
 
+// This Interface identifies all the possible events a HelloEntity will emit.
+// It extends AggregateEvent so the events are available in a Read-Side
 public interface HelloEvent extends AggregateEvent<HelloEvent>, Jsonable {
 
+    // Events will be split into 10 shards. The shard will be evenly distributed across the cluster.
+    // All events belonging to the same entityId will be emitted on the same shard so that events
+    // emitted from the sme entity will be processed in the order they were created.
     AggregateEventShards<HelloEvent> HELLO_EVENT_TAG = AggregateEventTag.sharded(HelloEvent.class, 10);
 
     @Override

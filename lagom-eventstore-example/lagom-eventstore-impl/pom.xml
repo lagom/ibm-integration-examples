@@ -35,16 +35,12 @@
             <groupId>com.typesafe.play</groupId>
             <artifactId>play-netty-server_2.11</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.lightbend.lagom</groupId>
-            <artifactId>lagom-javadsl-testkit_2.11</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.lightbend.lagom</groupId>
-            <artifactId>lagom-logback_2.11</artifactId>
-        </dependency>
 
+        <!--
+             Some API provided by IBM Event and Apache Spark return Scala specific types.
+             This library helps converting Scala types into Java types
+             (e.g.: Option[T] into Optional<T>  or  Future[R] into CompletionStage<R>)
+             -->
         <dependency>
             <groupId>org.scala-lang.modules</groupId>
             <artifactId>scala-java8-compat_2.11</artifactId>
@@ -61,6 +57,7 @@
                 <configuration>
                     <archive>
                         <manifest>
+                            <!-- TODO: remove this plugin once IBM-event.jar is available on maven central -->
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>libs/</classpathPrefix>
                         </manifest>
