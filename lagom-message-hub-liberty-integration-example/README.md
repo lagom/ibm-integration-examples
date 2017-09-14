@@ -41,7 +41,7 @@ Follow these steps to get a local copy of this project and configure it with the
 
 1.  Open a command line shell and clone this repository:
     ```
-    git clone https://github.com/typesafehub/lagom-ibm-integration-examples.git
+    git clone https://github.com/lagom/ibm-integration-examples.git
     ```
 2.  Change into the root directory for this example:
     ```
