@@ -46,6 +46,7 @@ public class ExtractWriter {
       extract.extractNumber,
       extract.startBalance,
       extract.endBalance,
+      extract.archived ? com.lightbend.lagom.account.api.Extract.ARCHIVED : com.lightbend.lagom.account.api.Extract.IN_MEMORY,
       TreePVector.from(lines)
     );
   }

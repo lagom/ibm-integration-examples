@@ -56,10 +56,10 @@ public class Storage {
   }
 
 
-  CompletionStage<Done> save(String accountNumber, int extractNumber, String payload) {
+  CompletionStage<Done> save(String key, String payload) {
 
     Sink<ByteString, CompletionStage<MultipartUploadResult>> sink =
-            client.multipartUpload(bucket, buildId(accountNumber, extractNumber));
+            client.multipartUpload(bucket, key);
 
     return Source
             .single(ByteString.fromString(payload))
@@ -67,19 +67,14 @@ public class Storage {
             .thenApply(d -> Done.getInstance());
   }
 
-  CompletionStage<String> fetch(String accountNumber, int extractNumber) {
+  CompletionStage<String> fetch(String key) {
     return client
-            .download(bucket, buildId(accountNumber, extractNumber))
+            .download(bucket, key)
             .runFold(
                     new StringBuilder(),
                     (builder, byteStr) -> builder.append(byteStr.decodeString("UTF-8")),
                     materializer
             ).thenApply(StringBuilder::toString);
-  }
-
-
-  private String buildId(String accountNumber, int extractNumber) {
-    return accountNumber + "#" + extractNumber;
   }
 
 }

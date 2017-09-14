@@ -13,20 +13,25 @@ public class Extract {
   public final Integer extractNumber;
   public final double startBalance;
   public final double endBalance;
-  public final PCollection<TransactionEntry> transactionEntries;
+  public final String status;
+  public final PCollection<TransactionEntry> txEntries;
 
   @JsonCreator
   public Extract(String accountNumber,
                  Integer extractNumber,
                  double startBalance,
                  double endBalance,
-                 PCollection<TransactionEntry> transactionEntries) {
+                 String status,
+                 PCollection<TransactionEntry> txEntries) {
 
     this.accountNumber = accountNumber;
     this.extractNumber = extractNumber;
     this.startBalance = startBalance;
     this.endBalance = endBalance;
-    this.transactionEntries = transactionEntries;
+    this.status = status;
+    this.txEntries = txEntries;
   }
 
+  public static String ARCHIVED = "ARCHIVED";
+  public static String IN_MEMORY = "IN-MEMORY";
 }

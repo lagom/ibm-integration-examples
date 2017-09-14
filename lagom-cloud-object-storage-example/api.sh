@@ -1,32 +1,18 @@
 
 account.balance() {
-  http localhost:9000/api/account/$1/balance --verbose
+  http localhost:9000/api/account/$1/balance
 }
 
 
 account.deposit() {
-
-cat << EOF > /tmp/last.json
-{
-  "amount": "$2"
-}
-EOF
-  
-  http POST localhost:9000/api/account/$1/deposit --verbose < /tmp/last.json
+  http POST localhost:9000/api/account/$1/deposit amount=$2
 }
 
 
-account.withdraw() {
-
-cat << EOF > /tmp/last.json
-{
-  "amount": "$2"
-}
-EOF
-  
-  http POST localhost:9000/api/account/$1/withdraw --verbose < /tmp/last.json
+account.withdraw() {  
+  http POST localhost:9000/api/account/$1/withdraw amount=$2
 }
 
 account.extract() {
-  http localhost:9000/api/account/$1/extract/$2 --verbose
+  http localhost:9000/api/account/$1/extract/$2
 }

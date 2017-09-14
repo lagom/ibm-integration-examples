@@ -8,6 +8,7 @@ import com.google.common.base.Preconditions;
 import com.lightbend.lagom.account.impl.AccountEvent;
 import com.lightbend.lagom.account.impl.AccountEvent.DepositExecuted;
 import com.lightbend.lagom.account.impl.AccountEvent.WithdrawExecuted;
+import com.lightbend.lagom.javadsl.api.transport.NotFound;
 import com.lightbend.lagom.javadsl.persistence.Offset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,14 +63,16 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
 
   private CompletionStage<Done> save(Extract extract) {
 
+    logger.info("Extract " + extract.getId() + " has " + extract.totalTransactions() + " transactions.");
+
     if (extract.totalTransactions() == 5) {
-      logger.debug("Uploading extract for " + extract.extractNumber + " for account " + extract.accountNumber);
+      logger.info("Uploading extract: " + extract.getId());
       // generate payload
-      String payload = ExtractWriter.write(extract);
+      String payload = ExtractWriter.write(extract.withArchived(true));
 
       // save to cloud storage
       return storage
-              .save(extract.accountNumber, extract.extractNumber, payload)
+              .save(extract.getId(), payload)
               .thenApply(
                       done -> {
                         // once file is uploaded, we can start a new extract
@@ -82,6 +85,7 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
 
     } else {
       // save in memory only
+      logger.info("Saving extract in-memory: " + extract.getId());
       saveInMemory(extract);
       return CompletableFuture.completedFuture(Done.getInstance());
     }
@@ -102,7 +106,10 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
     if (extract != null && extract.extractNumber == extractNumber) {
       return CompletableFuture.completedFuture(ExtractWriter.write(extract));
     } else {
-      return storage.fetch(accountNumber, extractNumber);
+      String key = Extract.buildId(accountNumber, extractNumber);
+      return storage
+              .fetch(key)
+              .exceptionally( exp -> { throw new NotFound(key + " extract not found"); } );
     }
   }
 }

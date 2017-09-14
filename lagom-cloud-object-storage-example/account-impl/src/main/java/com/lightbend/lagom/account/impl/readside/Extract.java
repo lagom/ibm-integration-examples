@@ -4,30 +4,51 @@
 package com.lightbend.lagom.account.impl.readside;
 
 
-import com.lightbend.lagom.account.impl.Math;
+import lombok.AccessLevel;
+import lombok.Value;
+import lombok.experimental.Wither;
 import org.pcollections.PCollection;
 import org.pcollections.TreePVector;
 
 import java.time.OffsetDateTime;
 
-public class Extract {
+/**
+ * This class users Project Lombok (www.projectlombok.org) to generate {@code with} methods for its properties.
+ * You may want to add Lombok plugin to your IDE to remove compilation errors.
+ * (note: maven will compile without errors)
+ */
+@Value
+class Extract {
 
   public final String accountNumber;
+
+  @Wither(AccessLevel.PRIVATE)
   public final double startBalance;
+
+  @Wither(AccessLevel.PRIVATE)
   public final double endBalance;
+
+  @Wither(AccessLevel.PRIVATE)
   public final int extractNumber;
+
+  @Wither(AccessLevel.PUBLIC)
+  public final boolean archived;
+
+  @Wither(AccessLevel.PUBLIC)
   private final PCollection<Transaction> transactions;
 
   public Extract(String accountNumber,
                  double startBalance,
                  double endBalance,
                  int extractNumber,
+                 boolean archived,
                  PCollection<Transaction> transactions) {
 
     this.accountNumber = accountNumber;
     this.startBalance = startBalance;
     this.endBalance = endBalance;
     this.extractNumber = extractNumber;
+    this.archived = archived;
     this.transactions = transactions;
   }
 
@@ -38,16 +59,14 @@ public class Extract {
   /**
    * Builds a new extract based on this one.
    *
-   * New Extract will have no transactions and its start balance equals the previous end balance.
+   * New extract will have no transactions and its start balance equals the previous end balance.
    */
   public Extract newExtract() {
-    return new Extract(
-            accountNumber,
-            endBalance, // current balance is start balance in new extract
-            endBalance,
-            extractNumber + 1, // increase extractNumber by 1
-            TreePVector.empty()
-    );
+    return withExtractNumber(extractNumber + 1)
+            // current endBalance becomes the startBalance in new extract
+            .withStartBalance(endBalance) 
+            // clear transactions
+            .withTransactions(TreePVector.empty());
   }
 
   public static Extract newExtract(String accountNumber) {
@@ -56,6 +75,7 @@ public class Extract {
             0.0,
             0.0,
             1, // extractNumber start with 1
+            false,
             TreePVector.empty()
     );
   }
@@ -65,13 +85,8 @@ public class Extract {
   }
 
   public Extract newDeposit(Transaction.Deposit deposit) {
-    return new Extract(
-            accountNumber,
-            startBalance,
-            Math.round2(endBalance + deposit.getAmount()),
-            extractNumber,
-            transactions.plus(deposit)
-    );
+    return withEndBalance(endBalance + deposit.getAmount())
+            .withTransactions(transactions.plus(deposit));
   }
 
 
@@ -80,16 +95,19 @@ public class Extract {
   }
 
   public Extract newWithdraw(Transaction.Withdraw withdraw) {
-    return new Extract(
-            accountNumber,
-            startBalance,
-            Math.round2(endBalance - withdraw.getAmount()),
-            extractNumber,
-            transactions.plus(withdraw)
-    );
+    return withEndBalance(endBalance - withdraw.getAmount())
+            .withTransactions(transactions.plus(withdraw));
   }
 
   public PCollection<Transaction> getTransactions() {
     return transactions;
+  }
+
+  public String getId() {
+   return buildId(accountNumber, extractNumber);
+  }
+
+  public static String buildId(String accountNumber, int extractNumber) {
+    return accountNumber + "#" + extractNumber;
   }
 }
