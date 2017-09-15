@@ -5,6 +5,7 @@ package com.lightbend.lagom.account.impl.readside;
 
 import akka.Done;
 import com.google.common.base.Preconditions;
+import com.lightbend.lagom.account.api.ExtractCodec;
 import com.lightbend.lagom.account.impl.AccountEvent;
 import com.lightbend.lagom.account.impl.AccountEvent.DepositExecuted;
 import com.lightbend.lagom.account.impl.AccountEvent.WithdrawExecuted;
@@ -17,12 +18,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 /**
- * This AccountExtractRepositoryImpl class is an in-memory implementation only used for demo
+ * This AccountExtractRepositoryImpl class is an in-memory implementation only used demo
  * purposes. Don't use this in non-demo code ever!
  */
 @Singleton
@@ -45,11 +45,11 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
 
     // match events per type
     if (evt instanceof DepositExecuted) {
-      Extract extract = extracts.getOrDefault(evt.getNumber(), Extract.newExtract(evt.getNumber()));
+      Extract extract = extracts.getOrDefault(evt.getAccountNumber(), Extract.newExtract(evt.getAccountNumber()));
       return save(extract.newDeposit(evt.getAmount(), evt.getDateTime()));
 
     } else if (evt instanceof WithdrawExecuted) {
-      Extract extract = Preconditions.checkNotNull(extracts.get(evt.getNumber()), "Withdraw can't be the first generated event");
+      Extract extract = Preconditions.checkNotNull(extracts.get(evt.getAccountNumber()), "Withdraw can't be the first generated event");
       return save(extract.newWithdraw(evt.getAmount(), evt.getDateTime()));
 
     } else {
@@ -68,7 +68,7 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
     if (extract.totalTransactions() == 5) {
       logger.info("Uploading extract: " + extract.getId());
       // generate payload
-      String payload = ExtractWriter.write(extract.withArchived(true));
+      String payload = ExtractCodec.encode(Extract.toApi(extract.withArchived(true)));
 
       // save to cloud storage
       return storage
@@ -96,20 +96,21 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
     extracts.put(extract.accountNumber, extract);
   }
 
-  public Optional<Extract> findByAccountNumber(String accountNumber) {
-    return Optional.ofNullable(extracts.get(accountNumber));
-  }
-
   @Override
-  public CompletionStage<String> findExtract(String accountNumber, int extractNumber) {
+  public CompletionStage<com.lightbend.lagom.account.api.Extract> findExtract(String accountNumber, int extractNumber) {
     Extract extract = extracts.get(accountNumber);
     if (extract != null && extract.extractNumber == extractNumber) {
-      return CompletableFuture.completedFuture(ExtractWriter.write(extract));
+      return CompletableFuture.completedFuture(Extract.toApi(extract));
     } else {
       String key = Extract.buildId(accountNumber, extractNumber);
       return storage
               .fetch(key)
-              .exceptionally( exp -> { throw new NotFound(key + " extract not found"); } );
+//              .thenApply(ExtractCodec::decode)
+              .thenApply(ExtractCodec::decode)
+              .exceptionally( exp -> {
+                logger.error("Error while fetching archived report", exp);
+                throw new NotFound(key + " extract not found");
+              } );
     }
   }
 }

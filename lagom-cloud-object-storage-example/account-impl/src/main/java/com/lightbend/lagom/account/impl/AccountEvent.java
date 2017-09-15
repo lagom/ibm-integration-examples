@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.lightbend.lagom.javadsl.persistence.AggregateEvent;
 import com.lightbend.lagom.javadsl.persistence.AggregateEventTag;
 import com.lightbend.lagom.serialization.Jsonable;
+import lombok.Value;
 
 import javax.annotation.concurrent.Immutable;
 import java.time.OffsetDateTime;
@@ -22,7 +23,7 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
 
   AggregateEventTag<AccountEvent> TAG = AggregateEventTag.of(AccountEvent.class);
 
-  String getNumber();
+  String getAccountNumber();
   double getAmount();
   OffsetDateTime getDateTime();
 
@@ -31,18 +32,16 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
     return TAG;
   }
 
-  @SuppressWarnings("serial")
-  @Immutable
-  @JsonDeserialize
+  @Value
   public final class DepositExecuted implements AccountEvent {
 
-    private final String number;
+    private final String accountNumber;
     private final double amount;
     private final OffsetDateTime dateTime;
 
     @Override
-    public String getNumber() {
-      return number;
+    public String getAccountNumber() {
+      return accountNumber;
     }
 
     @Override
@@ -57,26 +56,24 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
 
 
     @JsonCreator
-    public DepositExecuted(double amount, String number, OffsetDateTime dateTime) {
+    public DepositExecuted(double amount, String accountNumber, OffsetDateTime dateTime) {
       this.amount = amount;
-      this.number = number;
+      this.accountNumber = accountNumber;
       this.dateTime = dateTime;
     }
 
   }
 
-  @SuppressWarnings("serial")
-  @Immutable
-  @JsonDeserialize
+  @Value
   public final class WithdrawExecuted implements AccountEvent {
 
-    private final String number;
+    private final String accountNumber;
     private final double amount;
     private final OffsetDateTime dateTime;
 
     @Override
-    public String getNumber() {
-      return number;
+    public String getAccountNumber() {
+      return accountNumber;
     }
 
     @Override
@@ -90,9 +87,9 @@ public interface AccountEvent extends Jsonable, AggregateEvent<AccountEvent> {
     }
 
     @JsonCreator
-    public WithdrawExecuted(double amount, String number, OffsetDateTime dateTime) {
+    public WithdrawExecuted(double amount, String accountNumber, OffsetDateTime dateTime) {
       this.amount = amount;
-      this.number = number;
+      this.accountNumber = accountNumber;
       this.dateTime = dateTime;
     }
   }

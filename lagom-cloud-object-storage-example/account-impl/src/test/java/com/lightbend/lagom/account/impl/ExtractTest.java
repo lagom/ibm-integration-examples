@@ -15,9 +15,9 @@ public class ExtractTest {
     Extract r1 = Extract.newExtract("abc");
 
     Extract r2 = r1.newDeposit(10.0, OffsetDateTime.now())
-                  .newDeposit(20.0, OffsetDateTime.now())
-                  .newWithdraw(20.0, OffsetDateTime.now())
-                  .newDeposit(100.0, OffsetDateTime.now());
+            .newDeposit(20.0, OffsetDateTime.now())
+            .newWithdraw(20.0, OffsetDateTime.now())
+            .newDeposit(100.0, OffsetDateTime.now());
 
 
     assertEquals(4, r2.totalTransactions());
@@ -25,7 +25,6 @@ public class ExtractTest {
     assertEquals(110.0, r2.endBalance, 0.0);
 
     assertEquals(1, r2.extractNumber);
-
 
 
     Extract r3 = r2.newExtract();

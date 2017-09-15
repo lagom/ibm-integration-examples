@@ -19,7 +19,7 @@ public interface AccountService extends Service {
 
   ServiceCall<NotUsed, Double> balance(String accountNumber);
 
-  ServiceCall<NotUsed, String> extract(String accountNumber, int extractNumber);
+  ServiceCall<NotUsed, Extract> extract(String accountNumber, int extractNumber);
 
   @Override
   default Descriptor descriptor() {

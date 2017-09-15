@@ -41,7 +41,7 @@ public class AccountExtractProcessor extends ReadSideProcessor<AccountEvent> {
 
       @Override
       public CompletionStage<Done> globalPrepare() {
-        // we don't save offset, repo is designed to consume from first event each time
+        // no global prepare, nothing to store in DB
         return CompletableFuture.completedFuture(Done.getInstance());
       }
 

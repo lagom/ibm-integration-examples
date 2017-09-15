@@ -3,15 +3,11 @@
  */
 package com.lightbend.lagom.account.impl;
 
-import javax.annotation.concurrent.Immutable;
-
+import akka.Done;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.common.base.Preconditions;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import com.lightbend.lagom.serialization.Jsonable;
-
-import akka.Done;
+import lombok.Value;
 
 /**
  * This interface defines all the commands that the Account entity supports.
@@ -32,9 +28,7 @@ public interface AccountCommand extends Jsonable {
    * It has a reply type of {@link akka.Done}, which is sent back to the caller
    * when all the events emitted by this command are successfully persisted.
    */
-  @SuppressWarnings("serial")
-  @Immutable
-  @JsonDeserialize
+  @Value
   public final class Deposit implements AccountCommand, Jsonable, PersistentEntity.ReplyType<Done> {
     public final double amount;
 
@@ -53,9 +47,7 @@ public interface AccountCommand extends Jsonable {
    * It has a reply type of {@link akka.Done}, which is sent back to the caller
    * when all the events emitted by this command are successfully persisted.
    */
-  @SuppressWarnings("serial")
-  @Immutable
-  @JsonDeserialize
+  @Value
   public final class Withdraw implements AccountCommand, Jsonable, PersistentEntity.ReplyType<Done> {
     public final double amount;
 

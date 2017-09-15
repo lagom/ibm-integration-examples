@@ -4,7 +4,15 @@
 package com.lightbend.lagom.account.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.pcollections.PCollection;
+
+import java.io.IOException;
+import java.util.List;
 
 public class Extract {
 
@@ -13,16 +21,16 @@ public class Extract {
   public final Integer extractNumber;
   public final double startBalance;
   public final double endBalance;
-  public final String status;
-  public final PCollection<TransactionEntry> txEntries;
+  public final Status status;
+  public final List<TransactionEntry> txEntries;
 
   @JsonCreator
-  public Extract(String accountNumber,
-                 Integer extractNumber,
-                 double startBalance,
-                 double endBalance,
-                 String status,
-                 PCollection<TransactionEntry> txEntries) {
+  public Extract(@JsonProperty("accountNumber") String accountNumber,
+                 @JsonProperty("extractNumber") Integer extractNumber,
+                 @JsonProperty("startBalance") double startBalance,
+                 @JsonProperty("endBalance") double endBalance,
+                 @JsonProperty("status") Status status,
+                 @JsonProperty("txEntries") List<TransactionEntry> txEntries) {
 
     this.accountNumber = accountNumber;
     this.extractNumber = extractNumber;
@@ -32,6 +40,8 @@ public class Extract {
     this.txEntries = txEntries;
   }
 
-  public static String ARCHIVED = "ARCHIVED";
-  public static String IN_MEMORY = "IN-MEMORY";
+  public enum Status {
+    ARCHIVED, CURRENT;
+  }
 }
+

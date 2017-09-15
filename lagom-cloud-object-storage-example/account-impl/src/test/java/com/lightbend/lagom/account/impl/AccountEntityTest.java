@@ -31,17 +31,10 @@ public class AccountEntityTest {
   }
 
   @Test
-  public void testHelloWorld() {
+  public void testDeposit() {
 
     PersistentEntityTestDriver<AccountCommand, AccountEvent, Account> driver =
             new PersistentEntityTestDriver<>(system, new AccountEntity(), "account-1");
-
-    // make a deposit of 10
-    {
-      Outcome<AccountEvent, Account> outcome = driver.run(new AccountCommand.Deposit(10.0));
-      assertEquals(1, outcome.events().size());
-      assertEquals(Done.getInstance(), outcome.getReplies().get(0));
-    }
 
 
     // make a deposit of 100
@@ -58,10 +51,24 @@ public class AccountEntityTest {
 
       // no events are emitted for read-only command
       assertEquals(0, outcome.events().size());
-      // startBalance should be 110.0
-      assertEquals(110.0, outcome.getReplies().get(0));
+      // startBalance should be 100.0
+      assertEquals(100.0, outcome.getReplies().get(0));
     }
 
+  }
+
+  @Test
+  public void testWithdraw() {
+
+    PersistentEntityTestDriver<AccountCommand, AccountEvent, Account> driver =
+            new PersistentEntityTestDriver<>(system, new AccountEntity(), "account-1");
+
+    // make a deposit of 200
+    {
+      Outcome<AccountEvent, Account> outcome = driver.run(new AccountCommand.Deposit(200.0));
+      assertEquals(1, outcome.events().size());
+      assertEquals(Done.getInstance(), outcome.getReplies().get(0));
+    }
 
     // withdraw 50
     {
@@ -78,22 +85,25 @@ public class AccountEntityTest {
       // no events are emitted for read-only command
       assertEquals(0, outcome.events().size());
       // startBalance should be 60.0
-      assertEquals(60.0, outcome.getReplies().get(0));
+      assertEquals(150.0, outcome.getReplies().get(0));
     }
 
+  }
 
-    // reject withdraw of 100
-    {
-      Outcome<AccountEvent, Account> outcome = driver.run(new AccountCommand.Withdraw(100.0));
-      assertEquals(0, outcome.events().size());
+  @Test
+  public void testRejectedWithdraw() {
 
-      if (outcome.getReplies().get(0) instanceof PersistentEntity.InvalidCommandException) {
-        PersistentEntity.InvalidCommandException exception = (PersistentEntity.InvalidCommandException) outcome.getReplies().get(0);
-        assertEquals("Insufficient balance", exception.message());
-      }
+    PersistentEntityTestDriver<AccountCommand, AccountEvent, Account> driver =
+            new PersistentEntityTestDriver<>(system, new AccountEntity(), "account-1");
+
+
+    Outcome<AccountEvent, Account> outcome = driver.run(new AccountCommand.Withdraw(100.0));
+    assertEquals(0, outcome.events().size());
+
+    if (outcome.getReplies().get(0) instanceof PersistentEntity.InvalidCommandException) {
+      PersistentEntity.InvalidCommandException exception = (PersistentEntity.InvalidCommandException) outcome.getReplies().get(0);
+      assertEquals("Insufficient balance", exception.message());
     }
-
-
   }
 
 }

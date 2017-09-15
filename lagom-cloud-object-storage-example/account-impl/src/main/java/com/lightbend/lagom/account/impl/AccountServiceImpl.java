@@ -69,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public ServiceCall<NotUsed, String> extract(String accountNumber, int extractNumber) {
+  public ServiceCall<NotUsed, Extract> extract(String accountNumber, int extractNumber) {
     return request -> {
       return extractRepository.findExtract(accountNumber, extractNumber);
     };

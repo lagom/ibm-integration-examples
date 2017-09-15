@@ -16,6 +16,6 @@ public class AccountModule extends AbstractModule implements ServiceGuiceSupport
   @Override
   protected void configure() {
     bindService(AccountService.class, AccountServiceImpl.class);
-    bind(AccountExtractRepository.class).to(AccountExtractRepositoryImpl.class).asEagerSingleton();
+    bind(AccountExtractRepository.class).to(AccountExtractRepositoryImpl.class);
   }
 }

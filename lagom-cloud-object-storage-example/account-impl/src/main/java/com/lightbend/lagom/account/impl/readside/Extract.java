@@ -2,8 +2,9 @@
  * Copyright (C) 2016-2017 Lightbend Inc. <https://www.lightbend.com>
  */
 package com.lightbend.lagom.account.impl.readside;
+import com.lightbend.lagom.account.api.Extract.Status;
 
-
+import com.lightbend.lagom.account.api.TransactionEntry;
 import lombok.AccessLevel;
 import lombok.Value;
 import lombok.experimental.Wither;
@@ -11,14 +12,16 @@ import org.pcollections.PCollection;
 import org.pcollections.TreePVector;
 
 import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * This class users Project Lombok (www.projectlombok.org) to generate {@code with} methods for its properties.
+ * This class uses Project Lombok (www.projectlombok.org) to generate {@code with} methods for its properties.
  * You may want to add Lombok plugin to your IDE to remove compilation errors.
  * (note: maven will compile without errors)
  */
 @Value
-class Extract {
+public class Extract {
 
   public final String accountNumber;
 
@@ -109,5 +112,23 @@ class Extract {
 
   public static String buildId(String accountNumber, int extractNumber) {
     return accountNumber + "#" + extractNumber;
+  }
+
+  public static com.lightbend.lagom.account.api.Extract toApi(Extract extract) {
+
+    List<TransactionEntry> lines =
+            extract.getTransactions()
+                    .stream()
+                    .map( tx -> new TransactionEntry(tx.getLabel(), tx.getDateTime(), tx.getAmount()))
+                    .collect(Collectors.toList());
+
+    return new com.lightbend.lagom.account.api.Extract(
+            extract.accountNumber,
+            extract.extractNumber,
+            extract.startBalance,
+            extract.endBalance,
+            extract.archived ? Status.ARCHIVED : Status.CURRENT,
+            lines
+    );
   }
 }
