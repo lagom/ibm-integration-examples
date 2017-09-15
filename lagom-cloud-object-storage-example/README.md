@@ -2,7 +2,7 @@
 
 [IBM Cloud Object Storage](https://www.ibm.com/cloud-computing/bluemix/cloud-object-storage) is a web-scale platform that stores unstructured data — from petabyte to exabyte — with reliability, security, availability and disaster recovery without replication.
 
-This project demonstrates a simple Lagom service that includes a [Read-Side](https://www.lagomframework.com/documentation/current/java/ReadSide.html) processor which stores events of the [Persistent Entities](https://www.lagomframework.com/documentation/current/java/ReadSide.html) into Project EventStore for further analysis.
+This project demonstrates a simple Lagom service that includes a [Read-Side](https://www.lagomframework.com/documentation/current/java/ReadSide.html) processor which stores events of the [Persistent Entities](https://www.lagomframework.com/documentation/1.3.x/java/PersistentEntity.html) into Project EventStore for further analysis.
 
 
 ## Prerequisites
