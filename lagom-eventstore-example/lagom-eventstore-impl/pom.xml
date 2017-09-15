@@ -29,6 +29,7 @@
         </dependency>
         <dependency>
             <groupId>com.lightbend.lagom</groupId>
+            <!-- TODO: replace with log4j impl or remove this and src/main/resources/log4j.xml -->
             <artifactId>lagom-logback_2.11</artifactId>
         </dependency>
         <dependency>
