@@ -33,7 +33,7 @@ public class HelloServiceImpl implements HelloService {
                                 // get the persistent instance with entityId == 'id'
                                 .refFor(HelloEntity.class, id)
                                 // send a command to that instance
-                                .ask(HelloCommand.GREET_INSTANCE)
+                                .ask(HelloCommand.Greet.INSTANCE)
                                 // ignore the response from the entity and send "Hi" back as the HTTP response
                                 .thenApply(ignored -> "Hi!");
     }

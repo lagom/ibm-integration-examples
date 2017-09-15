@@ -8,7 +8,7 @@ import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 
 import java.util.Optional;
 
-// A simple entoty that will emit an event on every command. This is a made example for demo purposes.
+// A simple entity that will emit an event on every command. This is a made up example for demo purposes.
 public class HelloEntity extends PersistentEntity<HelloCommand, HelloEvent, GreetingsState> {
 
     @Override

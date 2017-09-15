@@ -4,8 +4,6 @@
 package com.lightbend.lagom.eventstore.impl.writeside;
 
 import akka.Done;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import com.lightbend.lagom.serialization.CompressedJsonable;
 import com.lightbend.lagom.serialization.Jsonable;
@@ -15,14 +13,8 @@ import com.lightbend.lagom.serialization.Jsonable;
 // the cluster to another node using a JSON format.
 public interface HelloCommand extends Jsonable {
 
-    Greet GREET_INSTANCE = new HelloCommand.Greet();
-
-    @SuppressWarnings("serial")
-    @JsonDeserialize
-    final class Greet implements HelloCommand, CompressedJsonable, PersistentEntity.ReplyType<Done> {
-        @JsonCreator
-        private Greet(){
-        }
+    enum Greet implements HelloCommand, CompressedJsonable, PersistentEntity.ReplyType<Done> {
+        INSTANCE
     }
 
 }

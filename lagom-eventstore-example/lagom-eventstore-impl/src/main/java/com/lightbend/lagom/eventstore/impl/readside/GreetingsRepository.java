@@ -97,16 +97,9 @@ public class GreetingsRepository {
             return eventStoreRepository.ensureTables();
         }
 
-        private CompletionStage<List<BoundStatement>> greetingHandler(HelloEvent event) {
+        private CompletionStage<List<BoundStatement>> greetingHandler(HelloEvent.Greeted event) {
             return eventStoreRepository.store(event).thenApply( done -> TreePVector.<BoundStatement>empty());
         }
 
-
-        public <T> Function<T, Done> accept(Consumer<T> f) {
-            return t -> {
-                f.accept(t);
-                return Done.getInstance();
-            };
-        }
     }
 }

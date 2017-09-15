@@ -139,9 +139,9 @@ public class EventStoreRepositoryImpl {
     // uses `at-most-once` semantics.
     // This in-memory implementation is only meant for demo purposes where `at-most-once` is desired.
     private int BUFFER_SIZE = 5;
-    private List<HelloEvent> buffer = new ArrayList<>(BUFFER_SIZE);
+    private List<HelloEvent.Greeted> buffer = new ArrayList<>(BUFFER_SIZE);
 
-    public CompletionStage<Done> store(HelloEvent event) {
+    public CompletionStage<Done> store(HelloEvent.Greeted event) {
         buffer.add(event);
 
         if (buffer.size() >= BUFFER_SIZE) {
@@ -151,7 +151,6 @@ public class EventStoreRepositoryImpl {
                     JavaConversions.asScalaBuffer(
                             buffer
                                     .stream()
-                                    .map(ev -> (HelloEvent.Greeted) ev)
                                     .map(greet -> RowFactory.create(greet.getName(), greet.getInstant()))
                                     .collect(Collectors.toList())
                     ).toIndexedSeq();
