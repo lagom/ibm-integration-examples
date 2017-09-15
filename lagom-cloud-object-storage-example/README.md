@@ -61,34 +61,28 @@ These messages indicate that the service has started correctly.
 
 ## Generate some traffic on the Lagom service
 
-From a new terminal, you should now generate some traffic on the Lagom service. 
-
 This application simulates a bank account application where deposits and withdraws can be executed on an account. On every 5 transactions an account extract is generated and uploaded to Cloud Object Storage. Extracts can be downloaded for local visualization. 
 
-Account transactions are propagated from the write-side (Account Entity) to the read-side (Extract Processor) as events stored in a Cassandra database. 
+Account transactions are propagated from the write-side (`AccountEntity`) to the read-side (`AccountExtractProcessor`) as events stored in a Cassandra database. 
 
 Extracts are kept in-memory until they reach 5 transactions when they are uploaded to Cloud Object Storage. For the sake of simplicity, the `AccountExtractRepository`, that holds extracts in-memory, is not thread-safe and therefore its code is only suitable for demonstrations.
 
 This application doesn't have a GUI. Only a REST API. Any REST client or http tool can be used to interact with it. We provide a simple `api.sh` that can be used as a shell client that uses [HTTPie](https://httpie.org/).  
 
+The rest of this guide will use `curl` syntax to document the calls. You can adapt it to your REST client of choice or use the provided `api.sh` script. You will find detailed information about the calls for `HTTPie` in the file itself.
+
   1. Source `api.sh` in your console (eg: `. api.sh`) - optional 
   2. Call   
      ```
-     account.deposit 123-4567-890 100  
-     # or equivalent curl command
      `curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/deposit --data '{ "amount": 100 }'
      ```
   3. Call   
      ```
-     account.withdraw 123-4567-890 100
-     # or equivalent curl command  
      curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/withdraw --data '{ "amount": 100 }'
      ```
   4. Repeat step 2 and 3 a couple of times. Watch out to not withdraw more than your current balance.  
      You can check the balance by calling.  
      ```
-     account.balance 123-4567-890 100
-     # or equivalent curl command  
      curl http://localhost:9000/api/account/123-4567-890/balance
      ```
   5. After the 5th operations you should see a INFO logging similar to:
@@ -99,8 +93,6 @@ This application doesn't have a GUI. Only a REST API. Any REST client or http to
   6. Check your Cloud Object Storage bucket in Bluemix. You should see an entry named 123-4567-890#1. 
   7. You can retrieve the account extract by calling:  
   ```
-  account.extract 123-4567-890 1
-  # or equivalent curl command  
   curl http://localhost:9000/api/account/123-4567-890/extract/1
   ```
 
