@@ -91,7 +91,7 @@ curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/accoun
 curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/withdraw --data '{ "amount": 100 }'
 ```
 
-4. Retrieve an extract:  
+4. To retrieve an extract:  
 
 ```
 curl http://localhost:9000/api/account/123-4567-890/extract/1
