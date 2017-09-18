@@ -7,6 +7,7 @@ This repository contains examples of integrating Lagom services with a variety o
 - [WebSphere Liberty](https://developer.ibm.com/wasdev/websphere-liberty/)
 - [IBM Bluemix](https://www.ibm.com/cloud-computing/bluemix/)
 - [IBM Message Hub](https://developer.ibm.com/messaging/message-hub/)
+- [IBM Db2](https://www.ibm.com/analytics/us/en/db2/)
 
 ## Examples
 
@@ -14,6 +15,6 @@ Each example is contained in its own directory within this project, and includes
 
 - [Lagom integration with IBM Message Hub](lagom-message-hub-example/)
 - [Lagom integration with IBM Message Hub and WebSphere Liberty](lagom-message-hub-liberty-integration-example/)
-
+- [Lagom integration with IBM Db2 and JPA](lagom-jpa-db2-example/)
 
 This set of examples will grow over time as new integrations are developed.
