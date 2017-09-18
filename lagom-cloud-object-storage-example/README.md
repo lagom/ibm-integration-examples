@@ -74,24 +74,39 @@ The example account number is 123-456-890. The Lagom service provides APIs to ch
 To check the balance and generate transactions, use calls to the following endpoints:
 
 1. To check the account balance: 
-``` curl http://localhost:9000/api/account/123-4567-890/balance ```
+
+``` 
+curl http://localhost:9000/api/account/123-4567-890/balance 
+```
 
 2.  To deposit money: 
-```curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/deposit --data '{ "amount": 100 }' ```
+
+```
+curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/deposit --data '{ "amount": 100 }' 
+```
 
 3. To withdraw money:     
-```curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/withdraw --data '{ "amount": 100 }'```
+
+```
+curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/withdraw --data '{ "amount": 100 }'
+```
+
 4. Retrieve an extract:  
-```curl http://localhost:9000/api/account/123-4567-890/extract/1```
+
+```
+curl http://localhost:9000/api/account/123-4567-890/extract/1
+```
+
 Extract are retrived by number (#1 in above example). The extract has a status: `ARCHIVED` meaning it is uploaded to Cloud Object Storage and is being retrieved from there or `CURRENT`indicating that this is currently being built in-memory and it's not yet uploaded.
 
 4. After the 5th operations you should see a INFO logging similar to:
+
   ```
   14:04:39.293 [info] com.lightbend.lagom.account.impl.readside.AccountExtractRepositoryImpl [] - Extract 123-4567-890#1 has 5 transactions.
   14:04:39.293 [info] com.lightbend.lagom.account.impl.readside.AccountExtractRepositoryImpl [] - Archiving extract: 123-4567-890#1
   ```
   
-At this point, Extract 123-4567-890#1 has been archived to Cloud Object Storage bucket. You can retrieve it by calling: 
+At this point, Extract `123-4567-890#1` has been archived to Cloud Object Storage bucket. You can retrieve it by calling: 
   
 ```
 curl http://localhost:9000/api/account/123-4567-890/extract/1
