@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lightbend.lagom</groupId>
+        <artifactId>lagom-jpa-db2-example</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>hello-impl</artifactId>
+
+    <packaging>jar</packaging>
+
+    <!-- The versions for each of these dependencies are configured in the parent pom.xml. -->
+    <dependencies>
+        <!-- Depends on hello-api because we implement this API -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>hello-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-server_2.11</artifactId>
+        </dependency>
+        <!-- lagom-javadsl-persistence-jpa enables RDBMS persistent entity and JPA read-side support. -->
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-persistence-jpa_2.11</artifactId>
+        </dependency>
+        <!-- Lagom allows you to configure a JPA provider of your choice. Hibernate is recommended. -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <!--
+          - Lagom relies on Slick (http://slick.lightbend.com/) for its RDBMS support.
+          - Each service must configure Slick with the correct driver for the database in its application.conf file.
+          - Db2 support is provided by Slick Extensions (http://slick.lightbend.com/doc/3.1.1/extensions.html).
+          -->
+        <dependency>
+            <groupId>com.typesafe.slick</groupId>
+            <artifactId>slick-extensions_2.11</artifactId>
+        </dependency>
+        <!--
+          - This is the Db2 JDBC driver, which is not available in a public Maven repository.
+          - See README.md for instructions on how to install it to your local repository.
+          -->
+        <dependency>
+            <groupId>com.ibm.db2.jcc</groupId>
+            <artifactId>db2jcc4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-logback_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
+            <artifactId>play-netty-server_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-testkit_2.11</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.lightbend.lagom</groupId>
+                <artifactId>lagom-maven-plugin</artifactId>
+                <configuration>
+                    <lagomService>true</lagomService>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

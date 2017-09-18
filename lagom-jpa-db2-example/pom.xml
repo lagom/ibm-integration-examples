@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.lightbend.lagom</groupId>
+    <artifactId>lagom-jpa-db2-example</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>hello-api</module>
+        <module>hello-impl</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.lightbend.lagom</groupId>
+                <artifactId>lagom-maven-plugin</artifactId>
+                <version>${lagom.version}</version>
+                <configuration>
+                    <!--
+                      - Disable the built-in Cassandra server: this project uses Db2 instead.
+                      - https://www.lagomframework.com/documentation/current/java/CassandraServer.html#Disable-it
+                      -->
+                    <cassandraEnabled>false</cassandraEnabled>
+                    <!-- Disable the built-in Kafka server: this project does not use the Message Broker API. -->
+                    <kafkaEnabled>false</kafkaEnabled>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-maven-version</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <!-- Lagom requires at least Maven version 3.2.1 -->
+                                <requireMavenVersion>
+                                    <version>[3.2.1,)</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.lightbend.lagom</groupId>
+                <artifactId>lagom-maven-dependencies</artifactId>
+                <version>${lagom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!-- Lagom allows you to configure a JPA provider of your choice. Hibernate is recommended. -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>5.2.10.Final</version>
+            </dependency>
+            <!--
+              - Lagom relies on Slick (http://slick.lightbend.com/) for its RDBMS support.
+              - Each service must configure Slick with the correct driver for the database in its application.conf file.
+              - Db2 support is provided by Slick Extensions (http://slick.lightbend.com/doc/3.1.1/extensions.html).
+              -->
+            <dependency>
+                <groupId>com.typesafe.slick</groupId>
+                <artifactId>slick-extensions_2.11</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            <!--
+              - This is the Db2 JDBC driver, which is not available in a public Maven repository.
+              - See README.md for instructions on how to install it to your local repository.
+              -->
+            <dependency>
+                <groupId>com.ibm.db2.jcc</groupId>
+                <artifactId>db2jcc4</artifactId>
+                <version>4.23.42</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <!-- This repository configuration is needed for Slick Extensions. -->
+        <repository>
+            <id>typesafe-releases</id>
+            <name>Typesafe Releases</name>
+            <url>https://repo.typesafe.com/typesafe/maven-releases/</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <lagom.version>1.3.8</lagom.version>
+    </properties>
+</project>
