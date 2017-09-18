@@ -14,7 +14,7 @@ This guide demonstrates how to deploy the Lagom service to a Kubernetes cluster 
 6.  [Test the Lagom service in Minikube](#test-the-lagom-service-in-minikube)
     1.  [Connect to the Lagom message stream](#connect-to-the-lagom-message-stream)
     2.  [Test producing a message from the Liberty sample application](#test-producing-a-message-from-the-liberty-sample-application)
-    3.  [Test producing a message from the Lagom service]
+    3.  [Test producing a message from the Lagom service](#test-producing-a-message-from-the-lagom-service)
 7.  [Stop the Minikube cluster](#stop-the-minikube-cluster)
 8.  [Next steps](#next-steps)
 
