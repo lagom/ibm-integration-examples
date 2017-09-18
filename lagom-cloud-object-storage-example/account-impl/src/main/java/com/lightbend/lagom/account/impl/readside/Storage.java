@@ -24,6 +24,9 @@ import scala.Some;
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
+/**
+ * Facade component for Alpakka S3 storage. Provides two basic methods: save() and fetch().  
+ */
 public class Storage {
 
   private final S3Client client;

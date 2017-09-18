@@ -11,6 +11,11 @@ import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import akka.Done;
 
 
+/** 
+ * AccountEntity models a simplified bank account. It supports three basic commands: Deposit, Withdraw and GetBalance. 
+ * 
+ * The Account can never go below zero. Withdraw amounts are checked against current balance and eventually rejected in case of insufficient balance.
+ */ 
 public class AccountEntity extends PersistentEntity<AccountCommand, AccountEvent, Account> {
 
   @Override

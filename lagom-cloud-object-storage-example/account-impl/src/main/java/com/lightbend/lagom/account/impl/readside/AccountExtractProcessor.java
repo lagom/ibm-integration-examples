@@ -17,6 +17,13 @@ import javax.inject.Inject;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+/**
+ * A read-side processor that subscribes to AccountEntity events and forward them to AccountExtractRepository.
+ * 
+ * This processor does not saves offsets and consumes the full event stream from scratch each time the application is restarted.
+ * This is done on purpose. The repository does not save to any database, but keeps accumulating Account Extracts in-memory before
+ * archiving in Cloud Object Storage. 
+ */
 public class AccountExtractProcessor extends ReadSideProcessor<AccountEvent> {
 
   final private AccountExtractRepositoryImpl repository;

@@ -2,7 +2,7 @@
 
 [IBM Cloud Object Storage](https://www.ibm.com/cloud-computing/bluemix/cloud-object-storage) is a web-scale platform that stores unstructured data — from petabyte to exabyte — with reliability, security, availability and disaster recovery without replication.
 
-This project demonstrates a simple Lagom service that includes a [Read-Side](https://www.lagomframework.com/documentation/current/java/ReadSide.html) processor publishes Account Extracts into [IBM Cloud Object Storage](https://www.ibm.com/cloud-computing/bluemix/cloud-object-storage).
+This project demonstrates a simple Lagom service that includes a [Read-Side](https://www.lagomframework.com/documentation/current/java/ReadSide.html) processor that publishes Account Extracts into [IBM Cloud Object Storage](https://www.ibm.com/cloud-computing/bluemix/cloud-object-storage).
 
 
 ## Prerequisites
@@ -99,7 +99,6 @@ curl http://localhost:9000/api/account/123-4567-890/extract/1
 
 You can also navigate to the  Cloud Object Storage bucket in Bluemix and verify the presence of the file.
   
-
 ## Stop Lagom and clean IBM Cloud Object Storage
 
 To stop running the service:
@@ -107,4 +106,14 @@ To stop running the service:
 1.  Press "Enter" in the console running the Lagom development environment to stop the service.
 2.  At this point you may want to remove the uploaded files from you Cloud Object Storage or simply delete the bucket or account if there were only created for running this demo.
     
+## Next steps
+
+To understand more about how the example was configured to work with Cloud Object Storage, review the following files in this project's source code:
+
+- [`pom.xml`](pom.xml) and [`account-impl/pom.xml`](account-impl/pom.xml) — dependency configuration
+- [`application.conf`](account-impl/src/main/resources/application.conf) — database connection configuration
+- [`AccountEntity.java`](account-impl/src/main/java/com/lightbend/lagom/account/impl/AccountEntity.java) — database-neutral persistent entity implementation
+- [`AccountExtractProcessor.java`](account-impl/src/main/java/com/lightbend/lagom/account/impl/readside/AccountExtractProcessor.java) — the read-side processor that consumes events from `AccountEntity` and forward to `AccountExtractRepository`.
+- [`AccountExtractRepositoryImpl.java`](account-impl/src/main/java/com/lightbend/lagom/account/impl/readside/AccountExtractRepositoryImpl.java) - the repository that accumulates `Account Extracts` in before archiving in Cloud Object Storage.
+- [`Storage.java`](account-impl/src/main/java/com/lightbend/lagom/account/impl/readside/Storage.java) - the `Storage` component is a facade to Alpakka S3 connector that is used to communicate with the Cloud Object Storage endpoint. 
     

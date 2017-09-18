@@ -24,12 +24,15 @@ import java.util.concurrent.CompletionStage;
 /**
  * This AccountExtractRepositoryImpl class is an in-memory implementation only used demo
  * purposes. Don't use this in non-demo code ever!
+ *
+ * This repository is responsible for build the Extract model in memory and upload to Cloud Object Storage whenver we reach a number 
+ * of 5 transactions. After archiving an Extract, a new in-memory Extract is created without any transaction, but preserving the previous balance.
  */
 @Singleton
 public class AccountExtractRepositoryImpl implements AccountExtractRepository {
 
   private Logger logger = LoggerFactory.getLogger(getClass());
-
+  private int BUFFER_SIZE = 5;
   private final Map<String, Extract> extracts = new HashMap<>();
   private final Storage storage;
 
@@ -65,7 +68,7 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
 
     logger.info("Extract " + extract.getId() + " has " + extract.totalTransactions() + " transactions.");
 
-    if (extract.totalTransactions() == 5) {
+    if (extract.totalTransactions() == BUFFER_SIZE) {
       logger.info("Archiving extract: " + extract.getId());
       // generate payload
       String payload = ExtractCodec.encode(Extract.toApi(extract.withArchived(true)));
@@ -105,7 +108,6 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
       String key = Extract.buildId(accountNumber, extractNumber);
       return storage
               .fetch(key)
-//              .thenApply(ExtractCodec::decode)
               .thenApply(ExtractCodec::decode)
               .exceptionally( exp -> {
                 logger.error("Error while fetching archived report", exp);
