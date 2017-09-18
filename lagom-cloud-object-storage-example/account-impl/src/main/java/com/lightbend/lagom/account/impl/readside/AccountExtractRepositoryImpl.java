@@ -66,7 +66,7 @@ public class AccountExtractRepositoryImpl implements AccountExtractRepository {
     logger.info("Extract " + extract.getId() + " has " + extract.totalTransactions() + " transactions.");
 
     if (extract.totalTransactions() == 5) {
-      logger.info("Uploading extract: " + extract.getId());
+      logger.info("Archiving extract: " + extract.getId());
       // generate payload
       String payload = ExtractCodec.encode(Extract.toApi(extract.withArchived(true)));
 
