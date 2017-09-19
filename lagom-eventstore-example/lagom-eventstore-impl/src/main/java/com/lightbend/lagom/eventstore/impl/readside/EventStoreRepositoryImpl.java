@@ -137,7 +137,7 @@ public class EventStoreRepositoryImpl {
     // This in-memory buffer will be lost when this process crashes so the data in EventStore
     // could contains gaps. So the complete PersistentEntity eventStream -to- EventStore delivery
     // uses `at-most-once` semantics.
-    // This in-memory implementation is only meant for demo purposes where `at-most-once` is desired.
+    // This in-memory implementation is only meant for demo purposes where `at-most-once` is acceptable.
     private int BUFFER_SIZE = 5;
     private List<HelloEvent.Greeted> buffer = new ArrayList<>(BUFFER_SIZE);
 

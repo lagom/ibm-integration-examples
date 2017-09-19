@@ -108,8 +108,6 @@ To stop running the service:
 2.  Bring the UI of IBM Project EventStore to the foreground, click on the cog at the top right corner and select `Quit`.
 
 
-Press "Enter" in the console running the Lagom development environment to stop the service.
-
 ## Next steps
 
 To understand more about how Lagom can be configured to work with IBM Project EventStore, review the following files in this project's source code:
