@@ -68,9 +68,7 @@ These messages indicate that the service has started correctly.
 
 ## Generate some traffic on the Lagom service
 
-To keep things simple, the example does not have a GUI but exposes a REST API. You can use any REST client or http tool to interact with the application. 
-
-The rest of this guide will use curl syntax to document the calls. You can adapt it to your REST client of choice.
+To keep things simple, the example does not have a GUI but exposes a REST API. You can use any REST client or http tool to interact with the application. The rest of this guide will use curl syntax to document the calls. You can adapt it to your REST client of choice.
 
 The example account number is 123-456-890. The Lagom service provides APIs to check the balance and to deposit or withdraw money. Use the REST calls below to create transactions. Be sure not to withdraw more money than the account balance. Then, retrieve the extract from the Cloud Object Storage bucket.
 
