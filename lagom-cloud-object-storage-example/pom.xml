@@ -25,6 +25,8 @@
                 <artifactId>lagom-maven-plugin</artifactId>
                 <version>${lagom.version}</version>
                 <configuration>
+                    <!-- cassandra journal is preserved across run -->
+                    <cassandraCleanOnStart>false</cassandraCleanOnStart>
                     <kafkaEnabled>false</kafkaEnabled>
                 </configuration>
             </plugin>
@@ -76,7 +78,7 @@
             <dependency>
               <groupId>com.lightbend.akka</groupId>
               <artifactId>akka-stream-alpakka-s3_2.11</artifactId>
-              <version>0.11+11-20592a5a</version>
+              <version>0.12</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>

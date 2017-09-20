@@ -9,8 +9,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.alpakka.s3.MemoryBufferType;
 import akka.stream.alpakka.s3.Proxy;
 import akka.stream.alpakka.s3.S3Settings;
-import akka.stream.alpakka.s3.auth.AWSCredentials;
-import akka.stream.alpakka.s3.auth.BasicCredentials;
+import com.amazonaws.auth.*;
 import akka.stream.alpakka.s3.javadsl.MultipartUploadResult;
 import akka.stream.alpakka.s3.javadsl.S3Client;
 import akka.stream.javadsl.Sink;
@@ -39,17 +38,19 @@ public class Storage {
 
     Config config = ConfigFactory.load().getConfig("cloud-object-storage");
 
-    AWSCredentials credentials =
-            new BasicCredentials(
-                    config.getString("credentials.access-key-id"),
-                    config.getString("credentials.secret-access-key")
-                    );
+    AWSStaticCredentialsProvider provider =
+            new AWSStaticCredentialsProvider(
+                    new BasicAWSCredentials(
+                            config.getString("credentials.access-key-id"),
+                            config.getString("credentials.secret-access-key")
+                    ));
+
 
     String host = config.getString("host");
     Option<Proxy> proxy = Some.apply(new Proxy(host, 443, "https"));
 
 
-    S3Settings settings = new S3Settings(MemoryBufferType.getInstance(),"", proxy, credentials, "", true);
+    S3Settings settings = new S3Settings(MemoryBufferType.getInstance(), proxy, provider, "", true);
     materializer = ActorMaterializer.create(actorSystem);
 
     bucket = config.getString("bucket");
