@@ -5,6 +5,12 @@
 This project demonstrates a simple Lagom service that includes a [Read-Side](https://www.lagomframework.com/documentation/current/java/ReadSide.html) processor that publishes Account Extracts into [IBM Cloud Object Storage](https://www.ibm.com/cloud-computing/bluemix/cloud-object-storage).
 
 
+## How the application works
+
+This example is a simple banking application that allows you to simulate depositing and withdrawing money from one account. The example propagates account transactions from the write-side (`AccountEntity`) to the read-side (`AccountExtractProcessor`) as events stored in a Cassandra database. On every 5 transactions, the service generates an account extract and uploads it to a Cloud Object Storage bucket. Extracts can be downloaded for local visualization.
+
+Note: the`AccountExtractRepository`, that holds extracts in-memory, is not thread-safe and therefore its code is only suitable for demonstrations.
+
 ## Prerequisites
 
 To build and run this example, you need:
@@ -21,6 +27,7 @@ Once you have an IBM Cloud Object Storage setup, the main steps to run this exam
 2.  [Start the Lagom sample application](#start-the-lagom-sample-application)
 3.  [Generate some traffic on the Lagom service](#generate-some-traffic-on-the-lagom-service)
 4.  [Stop Lagom and clean IBM Cloud Object Storage](#stop-lagom-and-clean-ibm-cloud-object-storage)
+5.  [Next steps](#next-steps)
 
 
 ## Download and set up the Lagom service
@@ -58,16 +65,12 @@ You should see some console output, including these lines:
 
 These messages indicate that the service has started correctly.
 
-## How the applicaiton workds
-This example is a simple banking application that allows you to simulate depositing and withdrawing money from one account. The example propagates account transactions from the write-side (`AccountEntity`) to the read-side (`AccountExtractProcessor`) as events stored in a Cassandra database. On every 5 transactions, the service generates an account extract and uploads it to a Cloud Object Storage bucket. Extracts can be downloaded for local visualization.
 
-Note: the`AccountExtractRepository`, that holds extracts in-memory, is not thread-safe and therefore its code is only suitable for demonstrations.
+## Generate some traffic on the Lagom service
 
 To keep things simple, the example does not have a GUI but exposes a REST API. You can use any REST client or http tool to interact with the application. 
 
 The rest of this guide will use curl syntax to document the calls. You can adapt it to your REST client of choice.
-
-## Generate some traffic on the Lagom service
 
 The example account number is 123-456-890. The Lagom service provides APIs to check the balance and to deposit or withdraw money. Use the REST calls below to create transactions. Be sure not to withdraw more money than the account balance. Then, retrieve the extract from the Cloud Object Storage bucket.
 
