@@ -1,0 +1,26 @@
+# This file should be filled with the bucket, host and credentials of your Cloud Object Storage
+#
+# You find this information on the Object Storage details page.
+# - in Bluemix, on upper-left corner click on menu icon and select "Infrastructure"
+# - In left menu open the "Storage" submenu and select "Object Storage". You should see a list of you Object Storage accounts.
+# - Select the one you want to use for this demo
+#
+cloud-object-storage {
+
+  # Must be filled with the bucket of your choice.
+  # In COS details page > "Manage Buckets"
+  bucket = ""
+
+
+  # Must be filled with one of the Authentication Endpoint available
+  # In COS details page > "Access & Permissions" > "Authentication Endpoints"
+  host = ""
+
+  # Must be filled with "Access Key ID" and "Secret Access Key"
+  # In COS details page >  "Access & Permissions" > "ACCESS KEYS" (collapsed by default)
+  credentials {
+    access-key-id = ""
+    secret-access-key = ""
+  }
+
+}

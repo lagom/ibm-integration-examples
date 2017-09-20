@@ -1,0 +1,5 @@
+.idea/
+logs/
+target/
+*.iml
+cloud-object-storage.conf
