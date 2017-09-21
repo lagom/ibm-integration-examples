@@ -50,7 +50,7 @@ Follow these steps to get a local copy of this project and configure it with the
     ```
 2.  Change into the root directory for this example:
     ```
-    cd lagom-message-hub-example
+    cd ibm-integration-examples/lagom-message-hub-example
     ```
 3.  To supply the configuration, do one of the following:
     1. Open the `message-hub-consumer-impl/src/main/resources/message-hub.conf` file in a text editor and fill in the empty values of the `brokers`, `user` and `password` properties from the credentials retrieved above.

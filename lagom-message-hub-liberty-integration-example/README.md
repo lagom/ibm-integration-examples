@@ -45,7 +45,7 @@ Follow these steps to get a local copy of this project and configure it with the
     ```
 2.  Change into the root directory for this example:
     ```
-    cd lagom-ibm-integration-examples/lagom-message-hub-liberty-integration-example
+    cd ibm-integration-examples/lagom-message-hub-liberty-integration-example
     ```
 3.  Open the `message-hub-liberty-integration-impl/src/main/resources/message-hub.conf` file in a text editor and fill in the empty values of the `brokers`, `user` and `password` properties from the credentials retrieved above.
 
