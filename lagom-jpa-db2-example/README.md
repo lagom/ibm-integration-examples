@@ -65,7 +65,7 @@ Follow these steps to get a local copy of this project and configure it with the
     ```
 2.  Change into the root directory for this example:
     ```
-    cd lagom-jpa-db2-example
+    cd ibm-integration-examples/lagom-jpa-db2-example
     ```
 3.  Lagom needs to be configured with the Db2 instance username and password you configured when you installed Db2. To supply the configuration, do one of the following:
     1.  By default, this service is configured with the username and password both set to "db2inst1". If you used the default, continue to the next step.
