@@ -75,44 +75,32 @@ The example account number is 123-456-890. The Lagom service provides APIs to ch
 To check the balance and generate transactions, use calls to the following endpoints:
 
 1. To check the account balance:
-
 ```
 curl http://localhost:9000/api/account/123-4567-890/balance
 ```
-
 2.  To deposit money:
-
 ```
 curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/deposit --data '{ "amount": 100 }'
 ```
-
 3. To withdraw money:
-
 ```
 curl -H "Content-Type: application/json" -XPOST http://localhost:9000/api/account/123-4567-890/withdraw --data '{ "amount": 100 }'
 ```
-
 4. To retrieve an extract:
-
 ```
 curl http://localhost:9000/api/account/123-4567-890/extract/1
 ```
-
 Extract are retrived by number (#1 in above example). The extract has a status: `ARCHIVED` meaning it is uploaded to Cloud Object Storage and is being retrieved from there or `CURRENT`indicating that this is currently being built in-memory and it's not yet uploaded.
 
 4. After the 5th operations you should see a INFO logging similar to:
-
-  ```
-  14:04:39.293 [info] com.lightbend.lagom.account.impl.readside.AccountExtractRepositoryImpl [] - Extract 123-4567-890#1 has 5 transactions.
-  14:04:39.293 [info] com.lightbend.lagom.account.impl.readside.AccountExtractRepositoryImpl [] - Archiving extract: 123-4567-890#1
-  ```
-
+```
+14:04:39.293 [info] com.lightbend.lagom.account.impl.readside.AccountExtractRepositoryImpl [] - Extract 123-4567-890#1 has 5 transactions.
+14:04:39.293 [info] com.lightbend.lagom.account.impl.readside.AccountExtractRepositoryImpl [] - Archiving extract: 123-4567-890#1
+```
 At this point, Extract `123-4567-890#1` has been archived to Cloud Object Storage bucket. You can retrieve it by calling:
-
 ```
 curl http://localhost:9000/api/account/123-4567-890/extract/1
 ```
-
 You can also navigate to the  Cloud Object Storage bucket in Bluemix and verify the presence of the file.
 
 ## Stop Lagom and clean IBM Cloud Object Storage
@@ -132,4 +120,3 @@ To understand more about how the example was configured to work with Cloud Objec
 - [`AccountExtractProcessor.java`](account-impl/src/main/java/com/lightbend/lagom/account/impl/readside/AccountExtractProcessor.java) — the read-side processor that consumes events from `AccountEntity` and forward to `AccountExtractRepository`.
 - [`AccountExtractRepositoryImpl.java`](account-impl/src/main/java/com/lightbend/lagom/account/impl/readside/AccountExtractRepositoryImpl.java) - the repository that accumulates `Account Extracts` in before archiving in Cloud Object Storage.
 - [`Storage.java`](account-impl/src/main/java/com/lightbend/lagom/account/impl/readside/Storage.java) - the `Storage` component is a facade to Alpakka S3 connector that is used to communicate with the Cloud Object Storage endpoint.
-
