@@ -123,6 +123,7 @@ From a WebSocket client, you can monitor the stream of messages that the Lagom s
 2.  In the **Location:** field, enter "`ws://localhost:9000/message-hub-consumer`".
 3.  Click **Connect**.
 4.  You should begin seeing messages appear in the **Log** panel:
+
     ```
     CONNECTED
 
@@ -139,4 +140,3 @@ To stop running the examples:
 
 1.  Press "Control-C" in the the console running the console producer to stop it.
 2.  Press "Enter" in the console running the Lagom development environment to stop the service.
-
