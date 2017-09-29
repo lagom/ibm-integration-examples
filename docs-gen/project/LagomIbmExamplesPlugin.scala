@@ -36,11 +36,7 @@ object LagomIbmExamplesPlugin extends sbt.AutoPlugin {
       outDir
     },
     paradoxProperties += ("download_url" -> s"https://example.lightbend.com/v1/download/${templateName.value}"),
-    bodyPrefix :=
-      s"""${name.value}
-         |=======================
-         |
-                     |""".stripMargin,
+    bodyPrefix := "" ,
     bodyTransformation := { case body =>
       val r = """\[([^]]+)\]\(([^)]+)\)""".r
       r.replaceAllIn(body,
