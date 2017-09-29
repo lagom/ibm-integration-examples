@@ -41,8 +41,11 @@ object LagomIbmExamplesPlugin extends sbt.AutoPlugin {
       val r = """\[([^]]+)\]\(([^)]+)\)""".r
       r.replaceAllIn(body,
         _ match {
-          case r(lbl, uri) if !uri.contains("http") => s"""[$lbl](${baseUrl.value}/${baseProject.value}/$uri)"""
-          case r(lbl, uri) => s"[$lbl]($uri)"
+          case r(lbl, uri) if (uri.startsWith("#") || uri.startsWith("http")) =>
+            s"[$lbl]($uri)"
+          case r(lbl, uri) =>
+            s"""[$lbl](${baseUrl.value}/${baseProject.value}/$uri)"""
+
         }
       )
     }
