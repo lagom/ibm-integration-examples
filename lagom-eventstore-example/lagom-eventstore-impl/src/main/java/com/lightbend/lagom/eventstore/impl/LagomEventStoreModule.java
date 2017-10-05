@@ -5,6 +5,7 @@ package com.lightbend.lagom.eventstore.impl;
 
 import com.google.inject.AbstractModule;
 import com.lightbend.lagom.eventstore.hello.api.HelloService;
+import com.lightbend.lagom.eventstore.impl.readside.EventStoreRepositoryImpl;
 import com.lightbend.lagom.eventstore.impl.readside.GreetingsRepository;
 import com.lightbend.lagom.javadsl.server.ServiceGuiceSupport;
 
@@ -21,6 +22,7 @@ public class LagomEventStoreModule extends AbstractModule implements ServiceGuic
         // an external, alternative storage (in this case IBM Project EventStore) so write-side
         // events are processed, converted into  the read-side model and the stored.
         bind(GreetingsRepository.class).asEagerSingleton();
+        bind(EventStoreRepositoryImpl.class).asEagerSingleton();
     }
 
 }

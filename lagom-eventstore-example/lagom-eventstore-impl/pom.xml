@@ -48,6 +48,20 @@
             <version>0.8.0</version>
         </dependency>
 
+        <!-- This is the client library required to send events into IBM Project Event Store.
+             You must install it manually on your local machine or a repository you control. See
+             The README.md of this project for more details.
+             -->
+        <dependency>
+            <groupId>com.ibm.eventstore</groupId>
+            <artifactId>ibm-event</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+        </dependency>
     </dependencies>
 
 

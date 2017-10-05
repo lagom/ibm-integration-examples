@@ -13,6 +13,7 @@ import com.ibm.event.oltp.EventError;
 import com.ibm.event.oltp.InsertResult;
 import com.lightbend.lagom.eventstore.impl.writeside.HelloEvent;
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
 import org.apache.spark.sql.types.DataTypes;
@@ -26,6 +27,7 @@ import scala.compat.java8.FutureConverters;
 import scala.compat.java8.OptionConverters;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -33,6 +35,7 @@ import java.util.stream.Collectors;
 
 // This facade encapsulates the required to setup the EventStore database, create its tables
 // and store data on them.
+@Singleton
 public class EventStoreRepositoryImpl {
 
     private static final String TABLE_NAME = "Greetings";
@@ -41,8 +44,8 @@ public class EventStoreRepositoryImpl {
     private EventContext eventCtx;
 
     @Inject
-    public EventStoreRepositoryImpl(com.typesafe.config.Config config) {
-        eventStoreConfig = new EventStoreConfig(config);
+    public EventStoreRepositoryImpl() {
+        eventStoreConfig = new EventStoreConfig();
 
     }
 
@@ -65,10 +68,15 @@ public class EventStoreRepositoryImpl {
 
             String databaseName = eventStoreConfig.databaseName;
 
+            if (eventStoreConfig.clearSchema) {
+                OptionConverters.toJava(EventContext$.MODULE$.dropDatabase(databaseName));
+            }
+
             Optional<EventError> maybeErrors =
                     OptionConverters.toJava(EventContext$.MODULE$.openDatabase(databaseName));
             // if there was an error opening the DB it probably means the database is missing.
             if (maybeErrors.isPresent()) {
+                EventContext$.MODULE$.dropDatabase(databaseName);
                 // try to create the database. If this operation fails it's probably because there's already
                 // a DB with a different name. We'll just let the exception flow to upper layers.
                 EventContext.createDatabase(databaseName);
@@ -92,10 +100,11 @@ public class EventStoreRepositoryImpl {
             // into Scala types (e.g. java.util.List<T> into scala.collection.Seq<T> )
             StructField[] fields = new StructField[]{
                     DataTypes.createStructField("name", DataTypes.StringType, false),
-                    DataTypes.createStructField("instant", DataTypes.IntegerType, false)
+                    DataTypes.createStructField("instant", DataTypes.LongType, false)
             };
             Seq<String> shardingColumns = JavaConversions.asScalaBuffer(Collections.EMPTY_LIST).toSeq();
-            Seq<String> pkColumns = JavaConversions.asScalaBuffer(Arrays.asList("instant", "name")).toSeq();
+            Seq<String> pkColumns =
+                    JavaConversions.asScalaBuffer(Arrays.asList("instant")).toSeq();
             TableSchema greetingsSchema =
                     new TableSchema(
                             TABLE_NAME,
@@ -113,7 +122,7 @@ public class EventStoreRepositoryImpl {
             // TODO: This code may need a review. This method should be idempotent and it's not 100% clear
             // what's the return value of `eventCtx.createTable` if it already exists or if it already
             // exists but it has a different structure.
-            if (maybeError.isPresent()) {
+            if (!maybeError.isPresent()) {
                 throw new RuntimeException(maybeError.get().errStr());
             } else {
                 // Each process in the Lagom cluster must keep a reference to the table. If/when the
@@ -177,11 +186,13 @@ public class EventStoreRepositoryImpl {
     static class EventStoreConfig {
         private final String endpoints;
         private final String databaseName;
+        private final Boolean clearSchema;
 
-        EventStoreConfig(com.typesafe.config.Config config) {
-            Config esConfig = config.getConfig("ibm.eventstore");
+        EventStoreConfig() {
+            Config esConfig = ConfigFactory.load().getConfig("ibm.eventstore");
             endpoints = esConfig.getString("endpoints");
             databaseName = esConfig.getString("db.name");
+            clearSchema = esConfig.getBoolean("clear-schema");
         }
     }
 }

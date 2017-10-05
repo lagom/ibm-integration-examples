@@ -24,6 +24,8 @@ Once you have an IBM Project EventStore running in your machine, the main steps 
 
 ## Download and set up the Lagom service
 
+(Make sure you completed all the steps on the Pre-Requisites section and IBM Project EventStore is installed and running)
+
 Follow these steps to get a local copy of this project and configure it to connect it to the IBM Project EventStore running on your machine
 
 1.  Open a command line shell and clone this repository:
@@ -36,8 +38,20 @@ Follow these steps to get a local copy of this project and configure it to conne
     ```
 3.  To supply the configuration, do one of the following:
     1. Open the `lagom-eventstore-impl/src/main/resources/ibm-event-store.conf` file in a text editor and fill in the empty value of the `endpoints` setting.
-    2. On the same file, provide the value of the `db.name` setting. The `db.name` is not hardcoded because IBM Project EventStore can only hold one database at the same time. If you already have a database and its name is different than the name you want Lagom to use you will have to remove the database from the IBM Proeject EventStore manually.
+    2. On the same file, provide the value of the `db.name` setting. The `db.name` is not hardcoded because IBM Project EventStore can only hold one database at the same time. If you already have a database and its name is different from the name you want Lagom to use you will have to remove the database from the IBM Project EventStore manually. This example application may rebuild the EventStore from scratch on every reboot so you can test from a clean slate: use the `clear-schema` config to rebuild the database from scratch on every run.
     3. If you prefer not to enter credentials into the file, you can also set them as environment variables named `IBM_EVENTSTORE_ENDPOINTS`,  and `IBM_EVENTSTORE_DATABASE_NAME`.
+4. Download and install the IBM Project Event Store client library.
+    1. Make sure you are on the project folder
+    2. Download and unzip the client library
+    ```
+wget https://github.com/IBMProjectEventStore/EventStore-DeveloperPreview/releases/download/1.1.1/ibm-eventstore-developer-client.1.1.1.zip
+unzip ibm-eventstore-developer-client.1.1.1.zip
+    ```
+    3. Install the library on your local repository:
+    ```
+mvn install:install-file -Dfile=ibm-eventstore-developer-client.1.1.1/ibm-event.jar -Dversion=1.1.1 -DgroupId=com.ibm.eventstore -DartifactId=ibm-event -Dpackaging=jar
+    ```
+
 
 ## Start the Lagom sample application
 

@@ -31,7 +31,7 @@
     </category>
 
     <logger name="com.ibm.event">
-        <level value="debug"/>
+        <level value="warn"/>
     </logger>
 
     <root>
