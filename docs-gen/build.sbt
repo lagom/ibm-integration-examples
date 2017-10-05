@@ -5,6 +5,13 @@ lazy val `lagom-cloud-object-storage-example` = project
     baseProject := "lagom-cloud-object-storage-example"
   )
 
+lazy val `lagom-eventstore-example` = project
+  .enablePlugins(LagomIbmExamplesPlugin)
+  .settings(
+    name        := "Lagom integration with IBM Project EventStore",
+    baseProject := "lagom-eventstore-example"
+  )
+
 lazy val `lagom-jpa-db2-example` = project
   .enablePlugins(LagomIbmExamplesPlugin)
   .settings(
