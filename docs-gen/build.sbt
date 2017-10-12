@@ -25,3 +25,10 @@ lazy val `lagom-message-hub-liberty-integration-example` = project
     name        := "Lagom integration with IBM Message Hub and WebSphere Liberty",
     baseProject := "lagom-message-hub-liberty-integration-example"
   )
+
+lazy val `lagom-mq-example-scala` = project
+  .enablePlugins(LagomIbmExamplesPlugin)
+  .settings(
+    name        := "Lagom integration with IBM MQ",
+    baseProject := "lagom-mq-example-scala"
+  )
