@@ -48,13 +48,10 @@
             <version>0.8.0</version>
         </dependency>
 
-        <!-- This is the client library required to send events into IBM Project Event Store.
-             You must install it manually on your local machine or a repository you control. See
-             The README.md of this project for more details.
-             -->
+        <!-- This is the client library required to send events into IBM Project Event Store. -->
         <dependency>
-            <groupId>com.ibm.eventstore</groupId>
-            <artifactId>ibm-event</artifactId>
+            <groupId>EventStore</groupId>
+            <artifactId>ibm-event-desktop</artifactId>
             <version>1.1.1</version>
         </dependency>
 
@@ -67,18 +64,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <!-- TODO: remove this plugin once IBM-event.jar is available on maven central -->
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>libs/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>com.lightbend.lagom</groupId>
                 <artifactId>lagom-maven-plugin</artifactId>
