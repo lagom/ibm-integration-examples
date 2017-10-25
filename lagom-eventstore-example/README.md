@@ -38,8 +38,8 @@ Follow these steps to get a local copy of this project and configure it to conne
     ```
 3.  To supply the configuration, do one of the following:
     1. Open the `lagom-eventstore-impl/src/main/resources/ibm-event-store.conf` file in a text editor and fill in the empty value of the `endpoints` setting.
-    2. On the same file, provide the value of the `db.name` setting. The `db.name` is not hardcoded because IBM Project EventStore can only hold one database at the same time. If you already have a database and its name is different from the name you want Lagom to use you will have to remove the database from the IBM Project EventStore manually. This example application may rebuild the EventStore from scratch on every reboot so you can test from a clean slate: use the `clear-schema` config to rebuild the database from scratch on every run.
-    3. If you prefer not to enter credentials into the file, you can also set them as environment variables named `IBM_EVENTSTORE_ENDPOINTS`,  and `IBM_EVENTSTORE_DATABASE_NAME`.
+    2. On the same file, provide the value of the `db.name` setting. If this is the first time you use IBM Project EventStore the default value is fine. If you already have a database and its name is different then the default you will have to either remove the existing database from your Event Store instance or change the value of `db.name` in the settings. Note that if you have existing data on your local instance of IBM Project EventStore it may be deleted.
+    3. This example application may rebuild the EventStore from scratch on every reboot so you can test from a clean slate: use the `clear-schema` config to rebuild the database from scratch on every run.
 
 
 ## Start the Lagom sample application
@@ -99,7 +99,8 @@ Once you have generated some data you should use the UI provided by IBM Project 
 2.  On the Top left corner, click on the menu Icon and select `My Notebooks`.
 3.  Click the `(+) Add notebooks` action in the top right section of the UI.
 4.  Select `From File` and fill the form fields `Name` and `Description`. In the `Notebook File` field, select the file `/lagom-ibm-integration-examples/lagom-eventstore-example/resources/lagom-event-store-example-greetings.ipynb` from your repository and click the `Create Notebook` button.
-5.  Once opened, use the `Run Cell` button (![](docs/imgs/run-cells.png)) to step forward executing each piece of your Notebook.
+5.  Review the values on the `Setup` cell and make sure the endpoints and database name match the values you configured in `ibm-event-store.conf` when setting up the lagom service in previous steps.
+6.  Once opened, use the `Run Cell` button (![](docs/imgs/run-cells.png)) to step forward executing each piece of your Notebook.
 
 
 
