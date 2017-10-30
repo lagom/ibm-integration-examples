@@ -36,9 +36,9 @@ Follow these steps to get a local copy of this project and configure it to conne
     ```
     cd lagom-eventstore-example
     ```
-3.  To supply the configuration, do one of the following:
+3.  To supply the configuration, perform the following steps:
     1. Open the `lagom-eventstore-impl/src/main/resources/ibm-event-store.conf` file in a text editor and fill in the empty value of the `endpoints` setting.
-    2. On the same file, provide the value of the `db.name` setting. If this is the first time you use IBM Project EventStore the default value is fine. If you already have a database and its name is different then the default you will have to either remove the existing database from your Event Store instance or change the value of `db.name` in the settings. Note that if you have existing data on your local instance of IBM Project EventStore it may be deleted.
+    2. In the same file, provide the value of the `db.name` setting. If this is the first time you use IBM Project EventStore the default value is fine. If you already have a database and its name is different then the default you will have to either remove the existing database from your Event Store instance or change the value of `db.name` in the settings. Note that if you have existing data on your local instance of IBM Project EventStore it may be deleted.
     3. This example application may rebuild the EventStore from scratch on every reboot so you can test from a clean slate: use the `clear-schema` config to rebuild the database from scratch on every run.
 
 
