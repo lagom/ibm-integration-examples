@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+    <appender name="info-out" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yy/MM/dd HH:mm:ss} %p %c{1} %l: %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="error-out" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.err"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yy/MM/dd HH:mm:ss} %p %c{1}: %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="warn" />
+            <param name="LevelMax" value="fatal" />
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter" />
+    </appender>
+
+    <category name="org.apache.zookeeper">
+        <priority value="off"/>
+    </category>
+
+    <category name="org.apache.spark">
+        <priority value="off"/>
+    </category>
+
+    <logger name="com.ibm.event">
+        <level value="warn"/>
+    </logger>
+
+    <root>
+        <level value="off"/>
+        <appender-ref ref="info-out" />
+        <appender-ref ref="error-out" />
+    </root>
+</log4j:configuration>

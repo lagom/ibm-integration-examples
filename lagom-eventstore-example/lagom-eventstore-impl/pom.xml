@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lightbend.lagom</groupId>
+        <artifactId>lagom-eventstore-example</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>lagom-eventstore-impl</artifactId>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lagom-eventstore-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-server_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-javadsl-persistence-cassandra_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
+            <!-- TODO: replace with log4j impl or remove this and src/main/resources/log4j.xml -->
+            <artifactId>lagom-logback_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
+            <artifactId>play-netty-server_2.11</artifactId>
+        </dependency>
+
+        <!--
+             Some API provided by IBM Event and Apache Spark return Scala specific types.
+             This library helps converting Scala types into Java types
+             (e.g.: Option[T] into Optional<T>  or  Future[R] into CompletionStage<R>)
+             -->
+        <dependency>
+            <groupId>org.scala-lang.modules</groupId>
+            <artifactId>scala-java8-compat_2.11</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+
+        <!-- This is the client library required to send events into IBM Project Event Store. -->
+        <dependency>
+            <groupId>EventStore</groupId>
+            <artifactId>ibm-event-desktop</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.lightbend.lagom</groupId>
+                <artifactId>lagom-maven-plugin</artifactId>
+                <configuration>
+                    <lagomService>true</lagomService>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
