@@ -1,9 +1,8 @@
 package com.example.hello.impl.jms
 
 import akka.Done
-import akka.stream.scaladsl.{Keep, Sink, Source, SourceQueueWithComplete}
+import akka.stream.scaladsl.{Source, SourceQueueWithComplete}
 import akka.stream.{Materializer, OverflowStrategy, QueueOfferResult}
-import com.example.hello.impl.jms.HelloJmsSinkFactory.RunSink
 import org.slf4j.LoggerFactory
 import play.api.inject.ApplicationLifecycle
 import play.api.libs.json.{JsValue, Json}
@@ -36,13 +35,7 @@ class HelloJmsSender(
 
     // Create the JMS sink and attach it to a stream. The stream
     // is fed by a SourceQueueWithComplete.
-    helloJmsSinkFactory.createJmsSink(new RunSink[SourceQueueWithComplete[String]] {
-      override def apply[Mat](sink: Sink[String, Mat]): (Mat, SourceQueueWithComplete[String]) = {
-        val queueSource: Source[String, SourceQueueWithComplete[String]] = Source.queue[String](0, OverflowStrategy.backpressure)
-        val (queue, mat) = queueSource.toMat(sink)(Keep.both).run()(materializer)
-        (mat, queue)
-      }
-    })
+    helloJmsSinkFactory.createJmsSink(Source.queue[String](0, OverflowStrategy.backpressure))
   }
 
   applicationLifecycle.addStopHook { () =>

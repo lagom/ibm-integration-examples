@@ -1,13 +1,12 @@
 package com.example.hello.impl.jms
 
+import akka.Done
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerSettings}
 import akka.pattern.pipe
 import akka.stream.Materializer
-import akka.stream.scaladsl.{Sink, Source}
-import akka.{Done, NotUsed}
+import akka.stream.scaladsl.Sink
 import com.example.hello.impl._
-import com.example.hello.impl.jms.HelloJmsSourceFactory.RunSource
 import com.lightbend.lagom.scaladsl.persistence.PersistentEntityRegistry
 import org.slf4j.LoggerFactory
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
@@ -39,24 +38,16 @@ class HelloJmsReceiverActor(
    * is first started or whenever it is restarted.
    */
   override def preStart(): Unit = {
-    logger.info("preStart called: creating MQ JmsSource")
+    logger.info("preStart called: creating MQ JmsSource connected to Sink.actorRefWithAck")
 
-    jmsSourceFactory.createJmsSource(new RunSource[Unit] {
-      override def apply[Mat](source: Source[String, Mat]): (Mat, Unit) = {
-        logger.info("preStart called: creating Sink.actorRefWithAck")
-
-        val actorSink: Sink[String, NotUsed] = Sink.actorRefWithAck[String](self,
+    jmsSourceFactory.createJmsSource(
+      Sink.actorRefWithAck[String](self,
           onInitMessage = StreamInit,
           ackMessage = StreamAck,
           onCompleteMessage = StreamComplete,
           onFailureMessage = StreamFailure
         )
-
-        logger.info("preStart called: creating stream from JmsSource to Sink.actorRefWithAck")
-        val sourceMat: Mat = source.to(actorSink).run()
-        (sourceMat, ())
-      }
-    })
+    )
   }
 
   /**
