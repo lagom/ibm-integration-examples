@@ -10,6 +10,7 @@ This repository contains examples of integrating Lagom services with a variety o
 - [IBM Db2](https://www.ibm.com/analytics/us/en/db2/)
 - [IBM Cloud Object Storage](https://www.ibm.com/cloud-computing/bluemix/cloud-object-storage)
 - [IBM MQ](http://www.ibm.com/software/products/en/ibm-mq)
+- [IBM Db2 Event Store](https://www.ibm.com/us-en/marketplace/db2-event-store)
 
 ## Examples
 
@@ -20,6 +21,7 @@ Each example is contained in its own directory within this project, and includes
 - [Lagom integration with IBM Db2 and JPA](lagom-jpa-db2-example/)
 - [Lagom integration with IBM Cloud Object Storage](lagom-cloud-object-storage-example/)
 - [Lagom integration with IBM MQ](lagom-mq-example-scala/)
+- [Lagom integration with IBM Db2 Event Store](lagom-eventstore-example/)
 
 
 This set of examples will grow over time as new integrations are developed.
