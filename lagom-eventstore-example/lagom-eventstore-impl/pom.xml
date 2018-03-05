@@ -48,11 +48,11 @@
             <version>0.8.0</version>
         </dependency>
 
-        <!-- This is the client library required to send events into IBM Project Event Store. -->
+        <!-- https://mvnrepository.com/artifact/com.ibm.event/ibm-db2-eventstore-desktop-client -->
         <dependency>
-            <groupId>EventStore</groupId>
-            <artifactId>ibm-event-desktop</artifactId>
-            <version>1.1.1</version>
+            <groupId>com.ibm.event</groupId>
+            <artifactId>ibm-db2-eventstore-desktop-client</artifactId>
+            <version>1.1.4</version>
         </dependency>
 
         <dependency>
