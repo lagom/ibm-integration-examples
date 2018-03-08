@@ -4,6 +4,7 @@ version in ThisBuild := "1.0-SNAPSHOT"
 // the Scala version that will be used for cross-compiled libraries
 scalaVersion in ThisBuild := "2.11.8"
 
+val ibmWebsphereMQ = "com.ibm.mq" % "com.ibm.mq.allclient" % "9.0.4.0"
 val alpakka = "com.lightbend.akka" %% "akka-stream-alpakka-jms" % "0.12"
 val macwire = "com.softwaremill.macwire" %% "macros" % "2.2.5" % "provided"
 val scalaTest = "org.scalatest" %% "scalatest" % "3.0.1" % Test
@@ -25,12 +26,13 @@ lazy val `hello-impl` = (project in file("hello-impl"))
       lagomScaladslPersistenceCassandra,
       lagomScaladslKafkaBroker,
       lagomScaladslTestKit,
-      alpakka,
       macwire,
+
+      ibmWebsphereMQ,
+      alpakka,
+
       scalaTest
     )
   )
   .settings(lagomForkedTestSettings: _*)
-  .dependsOn(`hello-api`, `mq-client`)
-
-lazy val `mq-client` = project
+  .dependsOn(`hello-api`)
