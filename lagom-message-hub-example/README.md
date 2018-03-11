@@ -119,7 +119,7 @@ The Lagom consumer service will also begin logging messages to the console as th
 
 From a WebSocket client, you can monitor the stream of messages that the Lagom service is consuming by connecting to the service URI as follows:
 
-1.  Go to https://www.websocket.org/echo.html.
+1.  Go to http://www.websocket.org/echo.html.
 2.  In the **Location:** field, enter "`ws://localhost:9000/message-hub-consumer`".
 3.  Click **Connect**.
 4.  You should begin seeing messages appear in the **Log** panel:
