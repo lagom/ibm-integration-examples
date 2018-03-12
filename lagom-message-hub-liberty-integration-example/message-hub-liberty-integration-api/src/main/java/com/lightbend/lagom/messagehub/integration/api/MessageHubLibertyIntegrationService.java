@@ -38,7 +38,7 @@ public interface MessageHubLibertyIntegrationService extends Service {
      * </p>
      * <ul>
      * <li>Ensure that both this service and the kafka-java-liberty-sample producer are running</li>
-     * <li>Go to <a href="https://www.websocket.org/echo.html">https://www.websocket.org/echo.html</a></li>
+     * <li>Go to <a href="http://www.websocket.org/echo.html">http://www.websocket.org/echo.html</a></li>
      * <li>Enter <code>ws://localhost:9000/messages</code> into the <b>Location:</b> field</li>
      * <li>Click <b>Connect</b></li>
      * <li>In another browser window or tab, navigate to the URL of the Liberty application, and click the

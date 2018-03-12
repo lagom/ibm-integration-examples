@@ -27,7 +27,7 @@ public interface MessageHubConsumerService extends Service {
      * </p>
      * <ul>
      * <li>Ensure that both this service and the kafka-java-console-sample producer are running</li>
-     * <li>Go to <a href="https://www.websocket.org/echo.html">https://www.websocket.org/echo.html</a></li>
+     * <li>Go to <a href="http://www.websocket.org/echo.html">http://www.websocket.org/echo.html</a></li>
      * <li>Enter <code>ws://localhost:9000/message-hub-consumer</code> into the <b>Location:</b> field</li>
      * <li>Click <b>Connect</b></li>
      * </ul>

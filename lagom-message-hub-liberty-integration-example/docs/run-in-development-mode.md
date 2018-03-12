@@ -53,7 +53,7 @@ You can test the running Lagom service by following these three steps:
 
 From a WebSocket client, you can monitor the stream of messages that the Lagom service is consuming from Message Hub, and send messages to Lagom to produce to Message Hub, by connecting to the service URI as follows:
 
-1.  Go to https://www.websocket.org/echo.html.
+1.  Go to http://www.websocket.org/echo.html.
 2.  In the **Location:** field, enter "`ws://localhost:9000/messages`".
 3.  Click **Connect**.
 
