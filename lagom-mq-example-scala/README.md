@@ -26,7 +26,6 @@ and migrating to another node in the cluster in the event of failure.
 1.  [Prerequisites](#prerequisites)
 2.  [Set up IBM MQ](#set-up-ibm-mq)
 3.  [Download and set up the Lagom service](#download-and-set-up-the-lagom-service)
-4.  [Download and install the IBM MQ driver](#download-and-install-the-ibm-mq-driver)
 5.  [Start the Lagom service](#start-the-lagom-service)
 6.  [Test the Lagom service](#test-the-lagom-service)
 7.  [Stop the Lagom service](#stop-the-lagom-service-and-docker)
@@ -84,25 +83,6 @@ You do not need to change these settings if you are using the default Docker
 image. If you do wish to use different MQ settings you can change them in the
 Lagom service's `application.conf` configuration file. The settings are documented
 in the comments in that file.
-
-## Download and install the MQ client driver
-
-To build and run the Lagom service, you will need to make the MQ client library available
-in your build.
-
-1. Go to [IBM's download page for MQ 9.0.0.1](http://ibm.biz/mq9001redistclients).
-2. Click on the link _9.0.0.1-IBM-MQC-Redist-Java_.
-3. You may be asked to log in to IBM. If needed, you can create a free account.
-4. Agree to the license agreement.
-5. Click on the link _9.0.0.1-IBM-MQC-Redist-Java.zip (20.8 MB)_.
-6. Go to the root directory of the `lagom-mq-example-scala` project.
-6. Extract the MQ client JAR files and copy them into the `mq-client/lib` directory
-   ```
-   $ jar xf 9.0.0.1-IBM-MQC-Redist-Java.zip java/lib/{com.ibm.mq.allclient.jar,jms.jar}
-   $ mkdir -p mq-client/lib
-   $ cp java/lib/* mq-client/lib
-   $ rm -ri java/lib
-   ```
 
 ## Start the Lagom service
 
