@@ -2,7 +2,7 @@ organization in ThisBuild := "com.example"
 version in ThisBuild := "1.0-SNAPSHOT"
 
 // the Scala version that will be used for cross-compiled libraries
-scalaVersion in ThisBuild := "2.11.8"
+scalaVersion in ThisBuild := "2.12.4"
 
 val ibmWebsphereMQ = "com.ibm.mq" % "com.ibm.mq.allclient" % "9.0.4.0"
 val alpakka = "com.lightbend.akka" %% "akka-stream-alpakka-jms" % "0.12"
