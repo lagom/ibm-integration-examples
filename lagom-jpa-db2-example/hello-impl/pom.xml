@@ -23,26 +23,17 @@
         </dependency>
         <dependency>
             <groupId>com.lightbend.lagom</groupId>
-            <artifactId>lagom-javadsl-server_2.11</artifactId>
+            <artifactId>lagom-javadsl-server_${scala.binary.version}</artifactId>
         </dependency>
         <!-- lagom-javadsl-persistence-jpa enables RDBMS persistent entity and JPA read-side support. -->
         <dependency>
             <groupId>com.lightbend.lagom</groupId>
-            <artifactId>lagom-javadsl-persistence-jpa_2.11</artifactId>
+            <artifactId>lagom-javadsl-persistence-jpa_${scala.binary.version}</artifactId>
         </dependency>
         <!-- Lagom allows you to configure a JPA provider of your choice. Hibernate is recommended. -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-        </dependency>
-        <!--
-          - Lagom relies on Slick (http://slick.lightbend.com/) for its RDBMS support.
-          - Each service must configure Slick with the correct driver for the database in its application.conf file.
-          - Db2 support is provided by Slick Extensions (http://slick.lightbend.com/doc/3.1.1/extensions.html).
-          -->
-        <dependency>
-            <groupId>com.typesafe.slick</groupId>
-            <artifactId>slick-extensions_2.11</artifactId>
         </dependency>
         <!--
           - This is the Db2 JDBC driver, which is not available in a public Maven repository.
@@ -54,15 +45,15 @@
         </dependency>
         <dependency>
             <groupId>com.lightbend.lagom</groupId>
-            <artifactId>lagom-logback_2.11</artifactId>
+            <artifactId>lagom-logback_${scala.binary.version}</artifactId>
         </dependency>
         <dependency>
             <groupId>com.typesafe.play</groupId>
-            <artifactId>play-netty-server_2.11</artifactId>
+            <artifactId>play-netty-server_${scala.binary.version}</artifactId>
         </dependency>
         <dependency>
             <groupId>com.lightbend.lagom</groupId>
-            <artifactId>lagom-javadsl-testkit_2.11</artifactId>
+            <artifactId>lagom-javadsl-testkit_${scala.binary.version}</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
