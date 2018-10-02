@@ -13,7 +13,7 @@ To build and run this example, you need:
 - [git](https://git-scm.com/)
 - [Java SE 8 JDK](http://www.oracle.com/technetwork/java/javase/overview/index.html)
 - [Maven 3.2.1+](https://maven.apache.org/) to build and run the Lagom project (3.5.0 recommended)
-- IBM Db2 Event Store [downloaded](https://github.com/IBMProjectEventStore/EventStore-DeveloperPreview/releases/tag/1.1.1), [installed](https://www.ibm.com/support/knowledgecenter/SSGNPV/eventstore/desktop/welcome.html) and running on your local machine. (This process requires 12+Gb of downloads)
+- IBM Db2 Event Store [downloaded](https://github.com/IBMProjectEventStore/EventStore-DeveloperEdition/releases), [installed](https://www.ibm.com/support/knowledgecenter/SSGNPV/eventstore/desktop/welcome.html) and running on your local machine. (This process requires 12+Gb of downloads)
 
 Once you have an IBM Db2 Event Store running in your machine, the main steps to run this example are:
 
@@ -97,8 +97,8 @@ Once you have generated some data you should use the UI provided by IBM Db2 Even
 
 1.  Bring the UI of IBM Db2 Event Store to the foreground.
 2.  On the Top left corner, click on the menu Icon and select `My Notebooks`.
-3.  Click the `(+) Add notebooks` action in the top right section of the UI.
-4.  Select `From File` and fill the form fields `Name` and `Description`. In the `Notebook File` field, select the file `/lagom-ibm-integration-examples/lagom-eventstore-example/resources/lagom-event-store-example-greetings.ipynb` from your repository and click the `Create Notebook` button.
+3.  Click the `(+) add notebooks` action in the top right section of the UI.
+4.  Select `From File` and fill the form fields `Name` and `Description`. In the `Notebook File` field, select the file `ibm-integration-examples/lagom-eventstore-example/resources/lagom-event-store-example-greetings.ipynb` from your repository and click the `Create Notebook` button.
 5.  Review the values on the `Setup` cell and make sure the endpoints and database name match the values you configured in `ibm-event-store.conf` when setting up the lagom service in previous steps.
 6.  Once opened, use the `Run Cell` button (![](docs/imgs/run-cells.png)) to step forward executing each piece of your Notebook.
 

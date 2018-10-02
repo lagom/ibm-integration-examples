@@ -55,7 +55,7 @@ public class EventStoreRepositoryImpl {
     // IBM Project EventStore can only hold one database at once so there are three possible
     // situations:
     //   a) there's not DB on EventStore
-    //          --> this methid will create a new one
+    //          --> this method will create a new one
     //   b) there's a DB on EventStore and it's named like the settings on EventStoreConfig.databaseName
     //          --> that database will be used (and no data will be erased
     //   c) there's a DB on EventStore with a different name
@@ -102,8 +102,9 @@ public class EventStoreRepositoryImpl {
                     DataTypes.createStructField("name", DataTypes.StringType, false),
                     DataTypes.createStructField("instant", DataTypes.LongType, false)
             };
-            Seq<String> shardingColumns = JavaConversions.asScalaBuffer(Collections.EMPTY_LIST).toSeq();
             Seq<String> pkColumns =
+                    JavaConversions.asScalaBuffer(Arrays.asList("instant")).toSeq();
+            Seq<String> shardingColumns =
                     JavaConversions.asScalaBuffer(Arrays.asList("instant")).toSeq();
             TableSchema greetingsSchema =
                     new TableSchema(
