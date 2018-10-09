@@ -20,7 +20,7 @@ public class LagomEventStoreModule extends AbstractModule implements ServiceGuic
         bindService(HelloService.class, HelloServiceImpl.class);
         // Eagerly start a GreetingsRepository. The GreetingsRepository provides access to
         // an external, alternative storage (in this case IBM Project EventStore) so write-side
-        // events are processed, converted into  the read-side model and the stored.
+        // events are processed, converted into the read-side model and then stored.
         bind(GreetingsRepository.class).asEagerSingleton();
         bind(EventStoreRepositoryImpl.class).asEagerSingleton();
     }
